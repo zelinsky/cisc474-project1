@@ -3,6 +3,4 @@ $(document).ready(function() {
         var h = $("#title");
         h.text("Bye!");
     });
-
-
 });
