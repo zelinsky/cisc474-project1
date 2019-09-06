@@ -15,14 +15,29 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <!-- Our CSS and JavaScript -->
     <link rel="stylesheet" type="text/css" href="styles/stylesheet.css">
-    <script type="text/javascript" src="scripts/javascript.js"></script>
+    <script type="text/javascript" src="scripts/EventEmitter.js"></script>
+    <script type="text/javascript" src="scripts/AutomataModel.js"></script>
+    <script type="text/javascript" src="scripts/AutomataView.js"></script>
+    <script type="text/javascript" src="scripts/AutomataController.js"></script>
 </head>
 
 <body>
-    <h1 id="title">Hello!</h1>
-    <p>Welcome to my web page!</p>
-    <button class="bye">Animate!</button>
-    <img src='images/ud.png'>
+    Pushdown Automata!<br>
+    <button id="btn"> Click Me! </button><br>
+    <span id="txt"></span>
+
+    <script>
+        $(document).ready(() => {
+            const model = new AutomataModel("Hello!"),
+                view = new AutomataView(model, {
+                    'aButton': document.getElementById('btn'),
+                    'aText': document.getElementById('txt')
+                }),
+                controller = new AutomataController(model, view);
+
+            view.show();
+        });
+    </script>
 </body>
 
 </html>
