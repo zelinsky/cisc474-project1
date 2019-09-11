@@ -2,12 +2,19 @@
  * The Controller. Controller responds to user actions and
  * invokes changes on the model.
  */
-class AutomataController {
+class Controller {
   constructor(model, view) {
     this._model = model;
     this._view = view;
 
-    view.on('aButtonClicked', () => this.setText());
+    view.on("leftArrow", () => this.moveLeft("greg"));
+  }
+
+  moveLeft(player) {
+    if (player === "greg") {
+      this._model.moveGreg(-20, 0);
+    }
+
   }
 
   setText() {
