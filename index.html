@@ -16,26 +16,32 @@
     <!-- Our CSS and JavaScript -->
     <link rel="stylesheet" type="text/css" href="styles/stylesheet.css">
     <script type="text/javascript" src="scripts/EventEmitter.js"></script>
-    <script type="text/javascript" src="scripts/AutomataModel.js"></script>
-    <script type="text/javascript" src="scripts/AutomataView.js"></script>
-    <script type="text/javascript" src="scripts/AutomataController.js"></script>
+    <script type="text/javascript" src="scripts/Model.js"></script>
+    <script type="text/javascript" src="scripts/View.js"></script>
+    <script type="text/javascript" src="scripts/Controller.js"></script>
 </head>
 
 <body>
-    Pushdown Automata!<br>
-    <button id="btn"> Click Me! </button><br>
-    <span id="txt"></span>
+
+    <div id="maze">
+        <div id="greg"></div>
+        <div class="python" id="python1"></div>
+        <div class="python" id="python2"></div>
+        <div class="python" id="python3"></div>
+        <div class="python" id="python4"></div>
+    </div>
 
     <script>
         $(document).ready(() => {
-            const model = new AutomataModel("Hello!"),
-                view = new AutomataView(model, {
-                    'aButton': document.getElementById('btn'),
-                    'aText': document.getElementById('txt')
+            const model = new Model(),
+                view = new View(model, {
+                    "greg": document.getElementById("greg"),
+                    "python1": document.getElementById("python1"),
+                    "python2": document.getElementById("python2"),
+                    "python3": document.getElementById("python3"),
+                    "python4": document.getElementById("python4")
                 }),
-                controller = new AutomataController(model, view);
-
-            view.show();
+                controller = new Controller(model, view);
         });
     </script>
 </body>

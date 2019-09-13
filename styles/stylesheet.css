@@ -2,3 +2,10 @@ body {
     background-color: yellow;
     color: blue;
 }
+
+#greg {
+    position: absolute;
+    left: 200px;
+    top: 200px;   
+    content:url("../images/ud.png");
+}
