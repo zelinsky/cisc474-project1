@@ -15,23 +15,36 @@ class View extends EventEmitter {
 		$(document).keydown(evt => {
 			switch (evt.which) {
 				case 37: // left
-					this.emit("gregMove", "left");
+					this.setGregDir("left");
 					break;
 				case 38: // up
-					this.emit("gregMove", "up");
+					this.setGregDir("up");
 					break;
 				case 39: // right
-					this.emit("gregMove", "right")
+					this.setGregDir("right");
 					break;
 				case 40: // down
-					this.emit("gregMove", "down");
+					this.setGregDir("down");
 					break;
-
+				case 83: // s
+					if (this._gregDir) {
+						clearInterval(this._gregDir);
+						delete this._gregDir;
+					}
+					break;
 				default: return; // exit this handler for other keys
 			}
 			evt.preventDefault(); // prevent the default action (scroll / move caret)
 		});
 
+		this.setGregDir("right");
+	}
+
+	setGregDir(dir) { 
+		if (this._gregDir) {
+			clearInterval(this._gregDir);
+		}
+		this._gregDir = setInterval(() => this.emit("gregMove", dir), 100);
 	}
 
 	moveGreg(pos) {
