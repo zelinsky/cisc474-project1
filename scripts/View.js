@@ -15,16 +15,16 @@ class View extends EventEmitter {
 		$(document).keydown(evt => {
 			switch (evt.which) {
 				case 37: // left
-					this.emit('leftArrow');
+					this.emit("gregMove", "left");
 					break;
 				case 38: // up
-					this.emit("upArrow");
+					this.emit("gregMove", "up");
 					break;
 				case 39: // right
-					this.emit("rightArrow")
+					this.emit("gregMove", "right")
 					break;
 				case 40: // down
-					this.emit("downArrow");
+					this.emit("gregMove", "down");
 					break;
 
 				default: return; // exit this handler for other keys
@@ -35,7 +35,7 @@ class View extends EventEmitter {
 	}
 
 	moveGreg(pos) {
-		$(this._elements.greg).animate({left: pos.x, top: pos.y});
+		$(this._elements.greg).css({left: pos.x, top: pos.y});
 	}
 
 	movePythons(posList) {

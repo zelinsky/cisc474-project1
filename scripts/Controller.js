@@ -7,20 +7,26 @@ class Controller {
     this._model = model;
     this._view = view;
 
-    view.on("leftArrow", () => this.moveLeft("greg"));
+    view.on("gregMove", (pos) => this.moveGreg(pos));
   }
 
-  moveLeft(player) {
-    if (player === "greg") {
-      this._model.moveGreg(-20, 0);
+  moveGreg(pos) {
+    switch (pos) {
+      case "left":
+        this._model.moveGreg(-5, 0);
+        break;
+      case "up":
+        this._model.moveGreg(0, -5);
+        break;
+      case "right":
+        this._model.moveGreg(5, 0);
+        break;
+      case "down":
+        this._model.moveGreg(0, 5);
+        break;
+      default: return;
     }
-
   }
-
-  setText() {
-    const text = window.prompt('Set text:', '');
-    if (text) {
-      this._model.setText(text);
-    }
-  }
+  
 }
+
