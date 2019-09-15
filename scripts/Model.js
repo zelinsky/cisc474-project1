@@ -7,8 +7,8 @@ class Player extends EventEmitter {
     super();
     this._posX = x || 0;
     this._posY = y || 0;
-    this._width = 10;
-    this._height = 10;
+    this._width = 110;
+    this._height = 110;
   }
 
   get getPos() {
