@@ -8,7 +8,7 @@ class View extends EventEmitter {
 		super();
 		this._model = model;
 		this._elements = elements;
-		this._updateSpeed = 100; // ms
+		this._updateSpeed = 50; // ms
 
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));

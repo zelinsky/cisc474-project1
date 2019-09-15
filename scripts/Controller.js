@@ -6,7 +6,7 @@ class Controller {
   constructor(model, view) {
     this._model = model;
     this._view = view;
-    this._speed = 6;
+    this._speed = 8;
 
     view.on("gregMove", (dir) => this.moveGreg(dir));
     view.on("pythonsMove", (dir) => this.movePythons(dir));
