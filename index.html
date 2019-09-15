@@ -36,10 +36,7 @@
             const model = new Model(),
                 view = new View(model, {
                     "greg": document.getElementById("greg"),
-                    "python1": document.getElementById("python1"),
-                    "python2": document.getElementById("python2"),
-                    "python3": document.getElementById("python3"),
-                    "python4": document.getElementById("python4")
+                    "pythons": [document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3"), document.getElementById("python4")]
                 }),
                 controller = new Controller(model, view);
         });

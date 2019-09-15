@@ -8,12 +8,13 @@ class Controller {
     this._view = view;
     this._speed = 6;
 
-    view.on("gregMove", (pos) => this.moveGreg(pos));
+    view.on("gregMove", (dir) => this.moveGreg(dir));
+    view.on("pythonsMove", (dir) => this.movePythons(dir));
   }
 
 
-  moveGreg(pos) {
-    switch (pos) {
+  moveGreg(dir) {
+    switch (dir) {
       case "left":
         this._model.moveGreg(-this._speed, 0);
         break;
@@ -25,6 +26,24 @@ class Controller {
         break;
       case "down":
         this._model.moveGreg(0, this._speed);
+        break;
+      default: return;
+    }
+  }
+
+  movePythons(dir) {
+    switch (dir) {
+      case "left":
+        this._model.movePythons(-this._speed, 0);
+        break;
+      case "up":
+        this._model.movePythons(0, -this._speed);
+        break;
+      case "right":
+        this._model.movePythons(this._speed, 0);
+        break;
+      case "down":
+        this._model.movePythons(0, this._speed);
         break;
       default: return;
     }

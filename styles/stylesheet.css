@@ -1,11 +1,13 @@
 body {
-    background-color: yellow;
-    color: blue;
+    background-color: white;
 }
 
 #greg {
-    position: absolute;
-    left: 200px;
-    top: 200px;   
+    position: absolute; 
     content:url("../images/greg.png");
+}
+
+.python {
+    position: absolute;
+    content:url("../images/python.png");
 }
