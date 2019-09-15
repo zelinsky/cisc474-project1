@@ -48,8 +48,8 @@ class Model extends EventEmitter {
     this._pythons = [];
     let x = 200;
     for (let i = 0; i < 4; i++) {
-      this._pythons.push(new Python(x, 200));
-      x += 15;
+      this._pythons.push(new Python(x, 400));
+      x += 150;
     }
   }
 
