@@ -9,8 +9,6 @@ class View extends EventEmitter {
 		this._model = model;
 		this._elements = elements;
 		this._updateSpeed = 50; // ms
-		this._gregDir = "stop";
-		this._pythonDir = "stop";
 		this._gameState = "stop";
 
 		// attach model listeners
