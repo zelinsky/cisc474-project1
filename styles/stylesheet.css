@@ -1,13 +1,20 @@
 body {
     background-color: white;
+    background-image: url("../images/gregman-maze.png");
+    background-repeat: no-repeat;
+    background-position: center top;
 }
 
 #greg {
     position: absolute; 
     content:url("../images/greg.png");
+    width: 35px;
+    height: 40px;
 }
 
 .python {
     position: absolute;
     content:url("../images/python.png");
+    width: 30px;
+    height: 30px;
 }
