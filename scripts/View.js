@@ -15,6 +15,7 @@ class View extends EventEmitter {
 
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
+		model.on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
 
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
@@ -69,6 +70,23 @@ class View extends EventEmitter {
 	gameStart() {
 		this._gameState = "start";
 		this._gameLoop = setInterval(() => this.emit("gameUpdate", this._gameValues), this._updateSpeed);
+	}
+
+	// TODO:
+	// Display winner
+	// Press 'r' to play again
+	gameOver(winner) {
+		if (winner === "greg") {
+			console.log("Greg wins!");
+		} else if (winner === "pythons") {
+			console.log("Pythons win!");
+		}
+	}
+
+	// TODO:
+	// Remove one life from display
+	loseLife() {
+
 	}
 
 	moveGreg(pos) {
