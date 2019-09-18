@@ -1,5 +1,8 @@
 body {
     background-color: white;
+    background-image: url("../images/gregman-maze.png");
+    background-repeat: no-repeat;
+    background-position: center top;
 }
 
 #greg {
