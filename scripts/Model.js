@@ -67,4 +67,15 @@ class Model extends EventEmitter {
     this.emit("pythonsMoved", newPosList);
   }
 
+  checkCollision() {
+    this._pythons.forEach(python => {
+      if (this._greg._posX < python._posX + python._width &&
+        this._greg._posX + this._greg._width > python._posX &&
+        this._greg._posY < python._posY + python._height &&
+        this._greg._posY + this._greg._height > python._posY) {
+         console.log("Collision!");
+     }
+    });
+  }
+
 }
