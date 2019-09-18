@@ -1,14 +1,10 @@
-/**
- * The Model. Model stores items and notifies
- * observers about changes.
- */
-class Player extends EventEmitter {
-  constructor(x, y) {
-    super();
+ // A Plyer is an object that has a postion and can move
+class Player {
+  constructor(x, y, w, h) {
     this._posX = x || 0;
     this._posY = y || 0;
-    this._width = 10;
-    this._height = 10;
+    this._width = w || 0;
+    this._height = h || 0;
   }
 
   get getPos() {
@@ -26,21 +22,26 @@ class Player extends EventEmitter {
 
 }
 
-
+// Pacman
 class Greg extends Player {
   constructor(x, y) {
-    super(x, y);
+    super(x, y, 35, 40);
   }
 
 }
 
+// Ghosts
 class Python extends Player {
   constructor(x, y) {
-    super(x, y);
+    super(x, y, 30, 30);
   }
 
 }
 
+/**
+ * The Model. Model stores items and notifies
+ * observers about changes.
+ */
 class Model extends EventEmitter {
   constructor() {
     super();
