@@ -10,6 +10,8 @@ body {
     content:url("../images/greg.png");
     width: 35px;
     height: 40px;
+    left: 200px;
+    top: 200px;
 }
 
 .python {
@@ -17,4 +19,24 @@ body {
     content:url("../images/python.png");
     width: 30px;
     height: 30px;
+}
+
+#python1 {
+    left: 200px;
+    top: 400px;
+}
+
+#python2 {
+    left: 350px;
+    top: 400px;
+}
+
+#python3 {
+    left: 500px;
+    top: 400px;
+}
+
+#python4 {
+    left: 650px;
+    top: 400px;
 }
