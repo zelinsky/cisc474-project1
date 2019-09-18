@@ -8,9 +8,13 @@ body {
 #greg {
     position: absolute; 
     content:url("../images/greg.png");
+    width: 35px;
+    height: 40px;
 }
 
 .python {
     position: absolute;
     content:url("../images/python.png");
+    width: 30px;
+    height: 30px;
 }
