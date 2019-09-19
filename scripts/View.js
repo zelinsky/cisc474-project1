@@ -13,7 +13,7 @@ class View extends EventEmitter {
 
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
-		model.on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
+		model.on("eatPellet", pellet => this.removePellet(pellet)).on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
 
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
@@ -84,6 +84,12 @@ class View extends EventEmitter {
 	// TODO:
 	// Remove one life from display
 	loseLife() {
+
+	}
+
+	// TODO:
+	// Remove pellet from display
+	removePellet(pellet) {
 
 	}
 

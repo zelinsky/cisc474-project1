@@ -102,4 +102,13 @@ class Model extends EventEmitter {
     });
   }
 
+  // TODO:
+  // Check if Greg can eat a pellet at current position
+  // Remove the pellet from the game
+  // If no pellets left, Greg wins
+  eatPellet() {
+    let pellet = 0;
+    this.emit("eatPellet", pellet);
+  }
+
 }
