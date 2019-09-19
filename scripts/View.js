@@ -9,12 +9,11 @@ class View extends EventEmitter {
 		this._model = model;
 		this._elements = elements;
 		this._updateSpeed = 50; // ms
-		this._gregDir = "stop";
-		this._pythonDir = "stop";
 		this._gameState = "stop";
 
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
+		model.on("eatPellet", pellet => this.removePellet(pellet)).on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
 
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
@@ -69,6 +68,29 @@ class View extends EventEmitter {
 	gameStart() {
 		this._gameState = "start";
 		this._gameLoop = setInterval(() => this.emit("gameUpdate", this._gameValues), this._updateSpeed);
+	}
+
+	// TODO:
+	// Display winner
+	// Press 'r' to play again
+	gameOver(winner) {
+		if (winner === "greg") {
+			console.log("Greg wins!");
+		} else if (winner === "pythons") {
+			console.log("Pythons win!");
+		}
+	}
+
+	// TODO:
+	// Remove one life from display
+	loseLife() {
+
+	}
+
+	// TODO:
+	// Remove pellet from display
+	removePellet(pellet) {
+
 	}
 
 	moveGreg(pos) {

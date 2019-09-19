@@ -27,7 +27,7 @@ class Controller {
         break;
       default: return;
     }
-
+    
     switch (values.pythonDir) {
       case "left":
         this._model.movePythons(-this._speed, 0);
@@ -43,6 +43,8 @@ class Controller {
         break;
       default: return;
     }
+
+    this._model.checkCollision();
   }
 
 }

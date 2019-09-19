@@ -26,6 +26,8 @@ class Player {
 class Greg extends Player {
   constructor(x, y) {
     super(x, y, 35, 40);
+    this._lives = 3;
+    this._poweredUp = false;
   }
 
 }
@@ -65,6 +67,48 @@ class Model extends EventEmitter {
       newPosList.push(python.move(x, y));
     });
     this.emit("pythonsMoved", newPosList);
+  }
+
+  // TODO:
+  // Place sprites back to starting positions (if Greg still has lives left)
+  gregEaten() {
+    this.emit("loseLife");
+    if (--this._greg._lives === 0) { // Decrease life, if 0 lives left, game ends
+      this.emit("gameOver", "pythons");
+    } else { // Place sprites back to original positions
+
+    }
+  }
+
+  // TODO:
+  // Send Python back to starting position, available after X seconds.
+  pythonEaten(python) {
+
+  }
+
+  checkCollision() {
+    this._pythons.forEach(python => {
+      if (this._greg._posX < python._posX + python._width &&
+        this._greg._posX + this._greg._width > python._posX &&
+        this._greg._posY < python._posY + python._height &&
+        this._greg._posY + this._greg._height > python._posY) {
+
+          if (this._greg._poweredUp) {
+            this.pythonEaten(python);
+          } else {
+            this.gregEaten();
+          }
+     }
+    });
+  }
+
+  // TODO:
+  // Check if Greg can eat a pellet at current position
+  // Remove the pellet from the game
+  // If no pellets left, Greg wins
+  eatPellet() {
+    let pellet = 0;
+    this.emit("eatPellet", pellet);
   }
 
 }
