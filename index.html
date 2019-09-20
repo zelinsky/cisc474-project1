@@ -36,11 +36,18 @@
             const model = new Model(),
                 view = new View(model, {
                     "greg": document.getElementById("greg"),
-                    "pythons": [document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3"), document.getElementById("python4")]
+                    "pythons": [document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3"), document.getElementById("python4"),],
+                    "mazemap": document.getElementById("mazemap")
                 }),
                 controller = new Controller(model, view);
         });
     </script>
+
+    <img src="images/gregman-maze.png" usemap="maze-map">
+
+    <map name="maze-map" id="mazemap">
+
+    </map>
 </body>
 
 </html>
