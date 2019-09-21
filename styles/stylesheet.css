@@ -6,7 +6,7 @@ body {
 }
 
 #greg {
-    position: absolute; 
+    position: absolute;
     content:url("../images/greg.png");
     width: 35px;
     height: 40px;
