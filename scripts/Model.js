@@ -44,7 +44,8 @@ class Python extends Player {
 class Model extends EventEmitter {
   constructor() {
     super();
-    this._greg = new Greg(200, 200);
+    this._maze = new MazeNodes();
+    this._greg = new Greg(this._maze.NodeList[0][0], this._maze.NodeList[0][0]);
     this._pythons = [];
     let x = 200;
     for (let i = 0; i < 4; i++) {
