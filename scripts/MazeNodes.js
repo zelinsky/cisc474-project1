@@ -1,5 +1,6 @@
 class MazeNodes {
     constructor() {
+        const NODE_BOUND = 10;
         this.NodeList = [[54, 51, [1, 7]],
         [191, 51, [0, 2, 9]],
         [330, 51, [1, 3, 10]],
@@ -127,5 +128,15 @@ class MazeNodes {
         [675, 802, [115, 123]],
         [745, 802, [117, 126]],
         [813, 802, [125, 118]]];
+    }
+
+    nodeCollide(x, y) {
+        for (i = 0; i < this.NodeList.length; i++) {
+            if ((abs(this.NodeList[i][0] - x) < this.NODE_BOUND) 
+                && (abs(this.NodeList[i][1] - y) < this.NODE_BOUND)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

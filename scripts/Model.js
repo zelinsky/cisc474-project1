@@ -9,6 +9,8 @@ class Player extends EventEmitter {
     this._posY = y || 0;
     this._width = 10;
     this._height = 10;
+    this._dir = "";
+    this._lastPress = "";
   }
 
   get getPos() {
@@ -56,6 +58,11 @@ class Model extends EventEmitter {
     let newPos = this._greg.move(x, y);
     this.emit("gregMoved", newPos);
   }
+  /*
+  moveGreg(dir) {
+    this._dir = dir;
+    // need to check if greg is colliding with a node
+  }*/
 
   movePythons(x, y) {
     let newPosList = []
