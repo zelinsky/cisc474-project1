@@ -21,17 +21,18 @@ class Controller {
     }); 
     this.stop = document.getElementById("stop"); 
     this.stop.addEventListener('click', function(evt){
-        
-        if (view._gregUpdate) {
-          clearInterval(view._gregUpdate);
-          delete view._gregUpdate;
-          view._gregDir = "stop";
-        }
-        if (view._pythonUpdate) {
-          clearInterval(view._pythonUpdate);
-          delete view._pythonUpdate;
-          view._gregDir = "stop";
-        }
+        if (view._gameState === "start"){
+          if (view._gregUpdate) {
+            clearInterval(view._gregUpdate);
+            //delete view._gregUpdate;
+            view._gregDir = "stop";
+          }
+          if (view._pythonUpdate) {
+            clearInterval(view._pythonUpdate);
+            //delete view._pythonUpdate;
+            view._gregDir = "stop";
+          }
+        } 
         
     }); 
   }
