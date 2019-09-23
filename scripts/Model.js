@@ -45,10 +45,10 @@ class Model extends EventEmitter {
   constructor() {
     super();
     this._maze = new MazeNodes();
-    this._greg = new Greg(this._maze.NodeList[0][0]-20, this._maze.NodeList[0][1]-20);
+    this._greg = new Greg(this._maze.NodeList[0][0] - 20, this._maze.NodeList[0][1] - 20);
     this._pythons = [];
     for (let i = 0; i < 4; i++) {
-      this._pythons.push(new Python(this._maze.NodeList[48][0]-20, this._maze.NodeList[48][1]-20));
+      this._pythons.push(new Python(this._maze.NodeList[48][0] - 20, this._maze.NodeList[48][1] - 20));
     }
   }
 

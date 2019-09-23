@@ -2,19 +2,25 @@ body {
     background-color: black;
     /*background-image: url("../images/gregman-maze.png");
     background-repeat: no-repeat;
-    background-position: center top;*/
+    background-position: center top;*/ 
 }
 
 #greg {
-    position: absolute;
+    /*position: absolute;*/ 
     content:url("../images/greg.png");
     width: 35px;
     height: 40px;
 }
 
 .python {
-    position: absolute;
+    /*position: absolute;*/ 
     content:url("../images/python.png");
     width: 30px;
     height: 30px;
+}
+.maze{
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 50%; 
+    display: block;  
 }
