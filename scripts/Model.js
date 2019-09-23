@@ -70,8 +70,12 @@ class Model extends EventEmitter {
     for (let i = 0; i < 4; i++) {
       this._pythons.push(new Python(this._maze.NodeList[48].x - 20, this._maze.NodeList[48].y - 20));
     }
+    this._semicolons = [];
+    this._semicolons.push(new Semicolon(100,200));
+    this._semicolons.push(new Semicolon(400,500));
     this.emit("gregMoved", this._greg.move(0, 0));
     this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
+    this.emit("drawPellets", this._semicolons);
   }
 
   /*moveGreg(x, y) {
