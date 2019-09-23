@@ -19,6 +19,7 @@ class Controller {
              
          }
     }); 
+    view.renderLives(3); // replace this with model.getLives() or something
     this.stop = document.getElementById("stop"); 
     this.stop.addEventListener('click', function(evt){
         if (view._gameState === "start"){
@@ -73,6 +74,7 @@ class Controller {
       default: return;
     }
   }
+  
 
 }
 

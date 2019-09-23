@@ -12,7 +12,7 @@ class View extends EventEmitter {
 		this._gregDir = "stop";
 		this._pythonDir = "stop";
 		this._gameState = "stop";
-
+		
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
 
@@ -100,4 +100,17 @@ class View extends EventEmitter {
 			$(this._elements.pythons[i]).css({ left: posList[i].x, top: posList[i].y });
 		}
 	}
+	renderLives(numLives){
+		let livesContainer = document.getElementById('lives'); 
+		let livesText = document.createElement('span'); 
+		livesText.innerText = 'Lives'; 
+		livesText.setAttribute('class', 'badge badge-secondary'); 
+		livesContainer.appendChild(livesText); 
+		for (let i = 0; i < numLives; i++){
+			let span = document.createElement('span'); 
+			span.setAttribute('class', 'greg');
+			let rect = span.getBoundingClientRect();  
+			livesContainer.appendChild(span); 
+		} 
+	  }
 }
