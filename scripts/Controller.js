@@ -7,11 +7,16 @@ class Controller {
     this._model = model;
     this._view = view;
     this._speed = 8;  
+
+    view.on("gregMove", (dir) => this.moveGreg(dir));
+    view.on("pythonsMove", (dir) => this.movePythons(dir)); 
     this.start = document.getElementById("start"); 
     this.start.addEventListener('click', function(evt){
          if (view._gameState == "stop"){
+             view._gameState = "start"; 
              view.setGregDir("right"); 
              view.setPythonDir("right"); 
+             
          }
     }); 
     this.stop = document.getElementById("stop"); 
@@ -29,9 +34,6 @@ class Controller {
         }
         
     }); 
-
-    view.on("gregMove", (dir) => this.moveGreg(dir));
-    view.on("pythonsMove", (dir) => this.movePythons(dir));
   }
   
   moveGreg(dir) {
