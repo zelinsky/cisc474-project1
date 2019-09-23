@@ -58,7 +58,7 @@ class Model extends EventEmitter {
     this._maze = new MazeNodes();
     this._greg = new Greg(this._maze.NodeList[0].x - 20, this._maze.NodeList[0].y - 20);
     this._pythons = [];
-    this._speed = 3;
+    this._speed = 5;
     for (let i = 0; i < 4; i++) {
       this._pythons.push(new Python(this._maze.NodeList[48].x - 20, this._maze.NodeList[48].y - 20));
     }
