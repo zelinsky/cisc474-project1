@@ -158,7 +158,7 @@ class MazeNodes {
     }
 
     dirClear(x, y, dir) {
-        console.log("Calling dirClear with input dir " + dir);
+        //console.log("Calling dirClear with input dir " + dir);
         var node = this.collidingNode(x, y);
         if (node) {
             var i = 0;
@@ -166,7 +166,7 @@ class MazeNodes {
                 case "right":  // we seek an adjacent node with equal y and greater x
                     for (i = 0; i < node.adjacency.length; i++) {
                         if ((this.getNode(node.adjacency[i]).y == node.y) && (this.getNode(node.adjacency[i]).x > node.x)) {
-                            console.log("Can go right from " + node.id + " to " + this.getNode(node.adjacency[i]).id);
+                            //console.log("Can go right from " + node.id + " to " + this.getNode(node.adjacency[i]).id);
                             return this.getNode(node.adjacency[i]);
                         }
                     }
@@ -174,7 +174,7 @@ class MazeNodes {
                 case "left":   // we seek an adjacent node with equal y and lesser x
                     for (i = 0; i < node.adjacency.length; i++) {
                         if ((this.getNode(node.adjacency[i]).y == node.y) && (this.getNode(node.adjacency[i]).x < node.x)) {
-                            console.log("Can go left from " + node.id + " to " + this.getNode(node.adjacency[i]).id);
+                            //console.log("Can go left from " + node.id + " to " + this.getNode(node.adjacency[i]).id);
                             return this.getNode(node.adjacency[i]);
                         }
                     }
@@ -182,7 +182,7 @@ class MazeNodes {
                 case "up":   // we seek an adjacent node with lesser y and equal x
                     for (i = 0; i < node.adjacency.length; i++) {
                         if ((this.getNode(node.adjacency[i]).y < node.y) && (this.getNode(node.adjacency[i]).x == node.x)) {
-                            console.log("Can go up from " + node.id + " to " + i);
+                            //console.log("Can go up from " + node.id + " to " + i);
                             return this.getNode(node.adjacency[i]);
                         }
                     }
@@ -190,7 +190,7 @@ class MazeNodes {
                 case "down":   // we seek an adjacent node with greater y and equal x
                     for (i = 0; i < node.adjacency.length; i++) {
                         if ((this.getNode(node.adjacency[i]).y > node.y) && (this.getNode(node.adjacency[i]).x == node.x)) {
-                            console.log("Can go down from " + node.id + " to " + i);
+                            //console.log("Can go down from " + node.id + " to " + i);
                             return this.getNode(node.adjacency[i]);
                         }
                     }
