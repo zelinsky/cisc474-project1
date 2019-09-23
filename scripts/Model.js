@@ -57,11 +57,15 @@ class Model extends EventEmitter {
     super();
     this._maze = new MazeNodes();
     this._greg = new Greg(this._maze.NodeList[48].x - 20, this._maze.NodeList[48].y - 20);
+    //console.log(this._maze.NodeList[48].x - 20);
+    //console.log(this._maze.NodeList[48].y - 20);
     this._pythons = [];
     let pythonStart = [0, 6, 119, 126];
     this._speed = 5;
     for (let i = 0; i < 4; i++) {
       this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - 20, this._maze.NodeList[pythonStart[i]].y - 20));
+      //console.log(this._maze.NodeList[pythonStart[i]].x - 20);
+      //console.log(this._maze.NodeList[pythonStart[i]].y - 20);
     }
     //this.emit("gregMoved", this._greg.move(0, 0));
     //this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
