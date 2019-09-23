@@ -1,6 +1,6 @@
 class MazeNodes {
     constructor() {
-        this.NODE_BOUND = 15;
+        this.NODE_BOUND = 5;
         this.OFFSET = 20;
         this.NodeList = [{ 'adjacency': [1, 7], 'x': 54, 'y': 51 },
         { 'adjacency': [0, 2, 8], 'x': 191, 'y': 51 },
@@ -11,7 +11,7 @@ class MazeNodes {
         { 'adjacency': [5, 15], 'x': 813, 'y': 51 },
         { 'adjacency': [0, 8, 16], 'x': 54, 'y': 144 },
         { 'adjacency': [1, 7, 9], 'x': 191, 'y': 144 },
-        { 'adjacency': [8, 10], 'x': 260, 'y': 144 },
+        { 'adjacency': [8, 27, 10], 'x': 260, 'y': 144 },
         { 'adjacency': [2, 9, 11, 19], 'x': 330, 'y': 144 },
         { 'adjacency': [3, 10, 12, 32], 'x': 433, 'y': 144 },
         { 'adjacency': [4, 11, 13, 22], 'x': 536, 'y': 144 },
@@ -138,7 +138,6 @@ class MazeNodes {
     nodeCollide(x, y) {
         var i = 0;
         for (i = 0; i < this.NodeList.length; i++) {
-            20
             if ((Math.abs((this.getNode(i).x - this.OFFSET) - x) < this.NODE_BOUND)
                 && (Math.abs((this.getNode(i).y - this.OFFSET) - y) < this.NODE_BOUND)) {
                 return true;
@@ -150,7 +149,6 @@ class MazeNodes {
     collidingNode(x, y) {
         var i = 0;
         for (i = 0; i < this.NodeList.length; i++) {
-            20
             if ((Math.abs((this.getNode(i).x - this.OFFSET) - x) < this.NODE_BOUND)
                 && (Math.abs((this.getNode(i).y - this.OFFSET) - y) < this.NODE_BOUND)) {
                 return this.getNode(i);
