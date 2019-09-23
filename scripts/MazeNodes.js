@@ -1,6 +1,7 @@
 class MazeNodes {
     constructor() {
-        const NODE_BOUND = 10;
+        this.NODE_BOUND = 10;
+        this.OFFSET = 20;
         this.NodeList = [{'adjacent': [1, 7], 'x': 54, 'y': 51},
         {'adjacent': [0, 2, 9], 'x': 191, 'y': 51},
         {'adjacent': [1, 3, 10], 'x': 330, 'y': 51},
@@ -131,9 +132,10 @@ class MazeNodes {
     }
 
     nodeCollide(x, y) {
-        for (i = 0; i < this.NodeList.length; i++) {
-            if ((abs(this.NodeList[i].x - x) < this.NODE_BOUND) 
-                && (abs(this.NodeList[i].y - y) < this.NODE_BOUND)) {
+        var i = 0;
+        for (i = 0; i < this.NodeList.length; i++) {20
+            if ((Math.abs((this.NodeList[i].x - this.OFFSET) - x) < this.NODE_BOUND) 
+                && (Math.abs((this.NodeList[i].y - this.OFFSET) - y) < this.NODE_BOUND)) {
                 return true;
             }
         }

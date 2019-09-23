@@ -57,12 +57,13 @@ class Model extends EventEmitter {
   moveGreg(x, y) {
     let newPos = this._greg.move(x, y);
     this.emit("gregMoved", newPos);
+    this.emit("debugLightChanged", this._maze.nodeCollide(newPos.x, newPos.y));
   }
-  /*
-  moveGreg(dir) {
+  
+  /*moveGreg(dir) {
     this._dir = dir;
     // need to check if greg is colliding with a node
-  }*/
+  } */
 
   movePythons(x, y) {
     let newPosList = []

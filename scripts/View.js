@@ -14,7 +14,7 @@ class View extends EventEmitter {
 		this._gameState = "stop";
 
 		// attach model listeners
-		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
+		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList)).on("debugLightChanged", state => this.debugLight(state));
 
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
@@ -98,6 +98,16 @@ class View extends EventEmitter {
 	movePythons(posList) {
 		for (let i = 0; i < posList.length; i++) {
 			$(this._elements.pythons[i]).css({ left: posList[i].x, top: posList[i].y });
+		}
+	}
+
+	debugLight(state) {
+		if (state) {
+			//$(this._elements.debug_light).css({ visibility: "visible" });
+			this._elements.debug_light.style.visibility = "visible";
+		} else {
+			//$(this._elements.debug_light).css({ visibility: "hidden" });
+			this._elements.debug_light.style.visibility = "hidden";
 		}
 	}
 }
