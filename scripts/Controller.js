@@ -8,13 +8,11 @@ class Controller {
     this._view = view;
     this._speed = 8;
 
-    view.on("gregMove", (dir) => this.moveGreg(dir));
-    view.on("pythonsMove", (dir) => this.movePythons(dir));
+    view.on("gameUpdate", (values) => this.updateModel(values));
   }
 
-
-  moveGreg(dir) {
-    switch (dir) {
+  updateModel(values) {
+    switch (values.gregDir) {
       case "left":
         this._model.moveGreg(-this._speed, 0, dir);
         break;
@@ -29,10 +27,8 @@ class Controller {
         break;
       default: return;
     }
-  }
-
-  movePythons(dir) {
-    switch (dir) {
+    
+    switch (values.pythonDir) {
       case "left":
         this._model.movePythons(-this._speed, 0);
         break;
@@ -47,6 +43,8 @@ class Controller {
         break;
       default: return;
     }
+
+    this._model.checkCollision();
   }
 
 }
