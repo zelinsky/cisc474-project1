@@ -1,4 +1,4 @@
- // A Plyer is an object that has a postion and can move
+// A Plyer is an object that has a postion and can move
 class Player {
   constructor(x, y, w, h) {
     this._posX = x;
@@ -76,6 +76,30 @@ class Model extends EventEmitter {
     var actualX = 0;
     var actualY = 0;
     if (!this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y)) {
+      switch (dir) {
+        case ("left"):
+          if (this._greg._dir == "right") {
+            this._greg._dir = dir;
+          }
+          break;
+        case ("right"):
+          if (this._greg._dir == "left") {
+            this._greg._dir = dir;
+          }
+          break;
+        case ("up"):
+          if (this._greg._dir == "down") {
+            this._greg._dir = dir;
+          }
+          break;
+        case ("down"):
+          if (this._greg._dir == "up") {
+            this._greg._dir = dir;
+          }
+          break;
+        default:
+          break;
+      }
       this._greg._lastPress = dir; // case for being in the middle of an edge
       //console.log("Set lastPress to " + dir);
     } else {
@@ -157,12 +181,12 @@ class Model extends EventEmitter {
         this._greg._posY < python._posY + python._height &&
         this._greg._posY + this._greg._height > python._posY) {
 
-          if (this._greg._poweredUp) {
-            this.pythonEaten(python);
-          } else {
-            this.gregEaten();
-          }
-     }
+        if (this._greg._poweredUp) {
+          this.pythonEaten(python);
+        } else {
+          this.gregEaten();
+        }
+      }
     });
   }
 
