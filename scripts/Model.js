@@ -77,18 +77,25 @@ class Model extends EventEmitter {
     var actualY = 0;
     if (!this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y)) {
       this._greg._lastPress = dir; // case for being in the middle of an edge
+      console.log("Set lastPress to " + dir);
     } else {
-      if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, dir)) {
-        if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, this._greg._dir)) {
-          if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, this._greg._lastPress)) {
+      if (!this._maze.dirClear(this._greg.getPos.x, this._greg.getPos.y, dir)) {
+        if (!this._maze.dirClear(this._greg.getPos.x, this._greg.getPos.y, this._greg._dir)) {
+          if (!this._maze.dirClear(this._greg.getPos.x, this._greg.getPos.y, this._greg._lastPress)) {
+            console.log("C1 [Input: " + dir + ", Current: " + this._greg._dir + ", LastPress: " + this._greg._lastPress + "] DECISION: stop");
             this._greg._dir = "stop";   // case for the last key, current dir, and input are blocked
           } else {
+            console.log("C2 [Input: " + dir + ", Current: " + this._greg._dir + ", LastPress: " + this._greg._lastPress + "] DECISION: " + this._greg._lastPress);
             this._greg._dir = this._greg._lastPress;  // case for the current dir and input are blocked but the last key is good
           }
         } else {
+          console.log("C3 [Input: " + dir + ", Current: " + this._greg._dir + ", LastPress: " + this._greg._lastPress + "] DECISION: " + this._greg._dir);
           this._greg._lastPress = dir; // case for if the input is blocked but current is good
         }
       } else {
+        //console.log("Input looks clear, going to node " + this._maze.dirClear(this._greg.getPos.x, this._greg.getPos.y, dir).id
+        //            + ", Input: " + dir + ", X: " + this._greg.getPos.x + ", Y: " + this._greg.getPos.y);
+        console.log("C4 [Input: " + dir + ", Current: " + this._greg._dir + ", LastPress: " + this._greg._lastPress + "] DECISION: " + dir);
         this._greg._dir = dir;   // case for if the input dir is unblocked
       }
     }

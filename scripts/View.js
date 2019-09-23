@@ -14,7 +14,7 @@ class View extends EventEmitter {
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
 		model.on("eatPellet", pellet => this.removePellet(pellet)).on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
-    model.on("debugLightChanged", state => this.debugLight(state));
+    	model.on("debugLightChanged", state => this.debugLight(state));
 
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
