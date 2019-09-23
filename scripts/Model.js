@@ -1,10 +1,12 @@
  // A Plyer is an object that has a postion and can move
 class Player {
   constructor(x, y, w, h) {
-    this._posX = x || 0;
-    this._posY = y || 0;
-    this._width = w || 0;
-    this._height = h || 0;
+    this._posX = x;
+    this._posY = y;
+    this._dir = "right";
+    this._lastPress = "";
+    this._width = w;
+    this._height = h;
   }
 
   get getPos() {
@@ -17,6 +19,12 @@ class Player {
   move(x, y) {
     this._posX += x;
     this._posY += y;
+    return this.getPos;
+  }
+
+  setPos(x, y) {
+    this._posX = x;
+    this._posY = y;
     return this.getPos;
   }
 
@@ -47,18 +55,67 @@ class Python extends Player {
 class Model extends EventEmitter {
   constructor() {
     super();
-    this._greg = new Greg(200, 200);
+    this._maze = new MazeNodes();
+    this._greg = new Greg(this._maze.NodeList[0].x - 20, this._maze.NodeList[0].y - 20);
     this._pythons = [];
-    let x = 200;
+    this._speed = 3;
     for (let i = 0; i < 4; i++) {
-      this._pythons.push(new Python(x, 400));
-      x += 150;
+      this._pythons.push(new Python(this._maze.NodeList[48].x - 20, this._maze.NodeList[48].y - 20));
     }
+    this.emit("gregMoved", this._greg.move(0, 0));
+    this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
   }
 
-  moveGreg(x, y) {
+  /*moveGreg(x, y) {
     let newPos = this._greg.move(x, y);
     this.emit("gregMoved", newPos);
+    this.emit("debugLightChanged", this._maze.nodeCollide(newPos.x, newPos.y));
+  }*/
+
+  moveGreg(x, y, dir) {  // This function is an atrocity and needs to be fixed
+    var actualX = 0;
+    var actualY = 0;
+    if (!this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y)) {
+      this._greg._lastPress = dir; // case for being in the middle of an edge
+    } else {
+      if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, dir)) {
+        if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, this._greg._dir)) {
+          if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, this._greg._lastPress)) {
+            this._greg._dir = "stop";   // case for the last key, current dir, and input are blocked
+          } else {
+            this._greg._dir = this._greg._lastPress;  // case for the current dir and input are blocked but the last key is good
+          }
+        } else {
+          this._greg._lastPress = dir; // case for if the input is blocked but current is good
+        }
+      } else {
+        this._greg._dir = dir;   // case for if the input dir is unblocked
+      }
+    }
+    switch (this._greg._dir) {  // handles updates for above branches
+      case "left":
+        actualX = -this._speed;
+        actualY = 0;
+        break;
+      case "up":
+        actualX = 0;
+        actualY = -this._speed;
+        break;
+      case "right":
+        actualX = this._speed;
+        actualY = 0;
+        break;
+      case "down":
+        actualX = 0;
+        actualY = this._speed;
+        break;
+      default:
+        actualX = 0;
+        actualY = 0;
+        this._greg._lastPress = "";
+    }
+    this.emit("gregMoved", this._greg.move(actualX, actualY));
+    this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
   }
 
   movePythons(x, y) {

@@ -19,6 +19,7 @@
     <script type="text/javascript" src="scripts/Model.js"></script>
     <script type="text/javascript" src="scripts/View.js"></script>
     <script type="text/javascript" src="scripts/Controller.js"></script>
+    <script type="text/javascript" src="scripts/MazeNodes.js"></script>
 </head>
 
 <body>
@@ -29,6 +30,7 @@
         <div class="python" id="python2"></div>
         <div class="python" id="python3"></div>
         <div class="python" id="python4"></div>
+        <div id="debug_light"></div>
     </div>
 
     <script>
@@ -36,8 +38,9 @@
             const model = new Model(),
                 view = new View(model, {
                     "greg": document.getElementById("greg"),
-                    "pythons": [document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3"), document.getElementById("python4")]
-                }),
+                    "pythons": [document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3"), document.getElementById("python4"),],
+                    "debug_light": document.getElementById("debug_light")
+                });
                 controller = new Controller(model, view);
         });
     </script>
