@@ -72,7 +72,7 @@ class Model extends EventEmitter {
     this.emit("debugLightChanged", this._maze.nodeCollide(newPos.x, newPos.y));
   }*/
 
-  moveGreg(x, y, dir) {  // This function is an atrocity and needs to be fixed
+  moveGreg(dir) {  // This function is an atrocity and needs to be fixed
     var actualX = 0;
     var actualY = 0;
     if (!this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y)) {

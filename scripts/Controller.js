@@ -12,21 +12,7 @@ class Controller {
   }
 
   updateModel(values) {
-    switch (values.gregDir) {
-      case "left":
-        this._model.moveGreg(-this._speed, 0, dir);
-        break;
-      case "up":
-        this._model.moveGreg(0, -this._speed, dir);
-        break;
-      case "right":
-        this._model.moveGreg(this._speed, 0, dir);
-        break;
-      case "down":
-        this._model.moveGreg(0, this._speed, dir);
-        break;
-      default: return;
-    }
+    this._model.moveGreg(values.gregDir);
     
     switch (values.pythonDir) {
       case "left":
