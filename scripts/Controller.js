@@ -6,13 +6,34 @@ class Controller {
   constructor(model, view) {
     this._model = model;
     this._view = view;
-    this._speed = 8;
+    this._speed = 8;  
+    this.start = document.getElementById("start"); 
+    this.start.addEventListener('click', function(evt){
+         if (view._gameState == "stop"){
+             view.setGregDir("right"); 
+             view.setPythonDir("right"); 
+         }
+    }); 
+    this.stop = document.getElementById("stop"); 
+    this.stop.addEventListener('click', function(evt){
+        
+        if (view._gregUpdate) {
+          clearInterval(view._gregUpdate);
+          delete view._gregUpdate;
+          view._gregDir = "stop";
+        }
+        if (view._pythonUpdate) {
+          clearInterval(view._pythonUpdate);
+          delete view._pythonUpdate;
+          view._gregDir = "stop";
+        }
+        
+    }); 
 
     view.on("gregMove", (dir) => this.moveGreg(dir));
     view.on("pythonsMove", (dir) => this.movePythons(dir));
   }
-
-
+  
   moveGreg(dir) {
     switch (dir) {
       case "left":
