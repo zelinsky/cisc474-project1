@@ -62,7 +62,7 @@ class View extends EventEmitter {
 
 		this._gameValues = {
 			gregDir: "right",
-			pythonDir: "right"
+			pythonDir: "up"
 		};
 	}
 
