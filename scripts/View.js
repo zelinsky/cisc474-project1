@@ -14,7 +14,7 @@ class View extends EventEmitter {
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
 		model.on("eatPellet", pellet => this.removePellet(pellet)).on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
-    model.on("debugLightChanged", state => this.debugLight(state)).on("drawPellets", pellets =>this.drawPellets(pellets));
+    	model.on("debugLightChanged", state => this.debugLight(state));
 
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
@@ -64,6 +64,7 @@ class View extends EventEmitter {
 			gregDir: "right",
 			pythonDir: "right"
 		};
+		this.drawPellets(this._model._semicolons);
 	}
 
 	gameStart() {
@@ -92,6 +93,7 @@ class View extends EventEmitter {
 	// TODO:
 	// Draw pellets
 	drawPellets(pellets) {
+		console.log(pellets);
 		pellets.forEach(pellet => {
 			$("#maze").append(`<div class="semicolon" style="left:${pellet._posX}px;top:${pellet._posY}px"></div>`);
 		});

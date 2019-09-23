@@ -75,7 +75,6 @@ class Model extends EventEmitter {
     this._semicolons.push(new Semicolon(400,500));
     this.emit("gregMoved", this._greg.move(0, 0));
     this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
-    this.emit("drawPellets", this._semicolons);
   }
 
   /*moveGreg(x, y) {

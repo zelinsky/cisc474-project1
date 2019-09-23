@@ -13,22 +13,7 @@ class Controller {
 
   updateModel(values) {
     this._model.moveGreg(values.gregDir);
-    
-    switch (values.pythonDir) {
-      case "left":
-        this._model.movePythons(-this._speed, 0);
-        break;
-      case "up":
-        this._model.movePythons(0, -this._speed);
-        break;
-      case "right":
-        this._model.movePythons(this._speed, 0);
-        break;
-      case "down":
-        this._model.movePythons(0, this._speed);
-        break;
-      default: return;
-    }
+    this._model.moveGreg(values.pythonDir);
 
     this._model.checkCollision();
   }
