@@ -71,6 +71,8 @@ class View extends EventEmitter {
 		this._gameLoop = setInterval(() => this.emit("gameUpdate", this._gameValues), this._updateSpeed);
 	}
 
+
+
 	// TODO:
 	// Display winner
 	// Press 'r' to play again
@@ -85,7 +87,14 @@ class View extends EventEmitter {
 	// TODO:
 	// Remove one life from display
 	loseLife() {
+	}
 
+	// TODO:
+	// Draw pellets
+	drawPellets(pellets) {
+		pellets.forEach(pellet => {
+			$("#maze").append(`<div class="semicolon" style="left:${pellet.x}px;top:${pellet.y}px"></div>`);
+		});
 	}
 
 	// TODO:

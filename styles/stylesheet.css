@@ -52,7 +52,7 @@ body {
 
 .semicolon {
     position: absolute;
-    content:url("../images/Semicolon.png");
+    content:url("../images/white-circle.png");
     width: 3px;
     height: 13px;
 }
