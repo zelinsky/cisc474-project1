@@ -3,7 +3,7 @@ class MazeNodes {
         this.NODE_BOUND = 15;
         this.OFFSET = 20;
         this.NodeList = [{ 'adjacency': [1, 7], 'x': 54, 'y': 51 },
-        { 'adjacency': [0, 2, 9], 'x': 191, 'y': 51 },
+        { 'adjacency': [0, 2, 8], 'x': 191, 'y': 51 },
         { 'adjacency': [1, 3, 10], 'x': 330, 'y': 51 },
         { 'adjacency': [2, 4, 11], 'x': 433, 'y': 51 },
         { 'adjacency': [3, 5, 12], 'x': 536, 'y': 51 },

@@ -72,7 +72,7 @@ class View extends EventEmitter {
 
 	}
 
-	setGregDir(dir) {
+	setGregDir(dir) { // There is currently a collision bug bc this fxn isn't called when there's no key presses. Need a game update loop/timer!!
 		if (this._gregDir != dir) {
 			if (this._gregUpdate) {
 				clearInterval(this._gregUpdate);
