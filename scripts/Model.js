@@ -10,7 +10,7 @@ class Player extends EventEmitter {
     this._width = 10;
     this._height = 10;
     this._dir = "right";
-    this._lastPress = "none";
+    this._lastPress = "";
   }
 
   get getPos() {
@@ -55,7 +55,7 @@ class Model extends EventEmitter {
     this._maze = new MazeNodes();
     this._greg = new Greg(this._maze.NodeList[0].x - 20, this._maze.NodeList[0].y - 20);
     this._pythons = [];
-    this._speed = 8;
+    this._speed = 3;
     for (let i = 0; i < 4; i++) {
       this._pythons.push(new Python(this._maze.NodeList[48].x - 20, this._maze.NodeList[48].y - 20));
     }
@@ -69,41 +69,47 @@ class Model extends EventEmitter {
     this.emit("debugLightChanged", this._maze.nodeCollide(newPos.x, newPos.y));
   }*/
 
-  moveGreg(x, y, dir) {
+  moveGreg(x, y, dir) {  // This function is an atrocity and needs to be fixed
     var actualX = 0;
     var actualY = 0;
-    if (this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y)) {
+    if (!this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y)) {
+      this._greg._lastPress = dir; // case for being in the middle of an edge
+    } else {
       if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, dir)) {
-        this._dir = "stop";
+        if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, this._greg._dir)) {
+          if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, this._greg._lastPress)) {
+            this._greg._dir = "stop";   // case for the last key, current dir, and input are blocked
+          } else {
+            this._greg._dir = this._greg._lastPress;  // case for the current dir and input are blocked but the last key is good
+          }
+        } else {
+          this._greg._lastPress = dir; // case for if the input is blocked but current is good
+        }
+      } else {
+        this._greg._dir = dir;   // case for if the input dir is unblocked
+      }
+    }
+    switch (this._greg._dir) {  // handles updates for above branches
+      case "left":
+        actualX = -this._speed;
+        actualY = 0;
+        break;
+      case "up":
+        actualX = 0;
+        actualY = -this._speed;
+        break;
+      case "right":
+        actualX = this._speed;
+        actualY = 0;
+        break;
+      case "down":
+        actualX = 0;
+        actualY = this._speed;
+        break;
+      default:
         actualX = 0;
         actualY = 0;
-      } else {
-        this._dir = dir;
-        actualX = x;
-        actualY = y;
-      }
-    } else {
-      switch (this._dir) {
-        case "left":
-          actualX = -this._speed;
-          actualY = 0;
-          break;
-        case "up":
-          actualX = 0;
-          actualY = -this._speed;
-          break;
-        case "right":
-          actualX = this._speed;
-          actualY = 0;
-          break;
-        case "down":
-          actualX = 0;
-          actualY = this._speed;
-          break;
-        default:
-          actualX = 0;
-          actualY = 0;
-      }
+        this._greg._lastPress = "";
     }
     this.emit("gregMoved", this._greg.move(actualX, actualY));
     this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
