@@ -8,13 +8,12 @@ class Controller {
     this._view = view;
     this._speed = 8;  
 
-    view.on("gregMove", (dir) => this.moveGreg(dir));
-    view.on("pythonsMove", (dir) => this.movePythons(dir)); 
     this.start = document.getElementById("start"); 
     this.start.addEventListener('click', function(evt){
          if (view._gameState == "stop"){
              view._gameState = "start"; 
-             view.setGregDir("right"); 
+             view._gameValues.gregDir = "up";
+             view._gameValues.pythonDir = "up";
              view.setPythonDir("right"); 
              
          }
@@ -24,55 +23,18 @@ class Controller {
     this.stop.addEventListener('click', function(evt){
         if (view._gameState === "start"){
           view._gameState = "stop"; 
-          if (view._gregUpdate) {
-            clearInterval(view._gregUpdate);
-            delete view._gregUpdate;
-            view._gregDir = "stop";
-          }
-          if (view._pythonUpdate) {
-            clearInterval(view._pythonUpdate);
-            delete view._pythonUpdate;
-            view._gregDir = "stop";
-          }
+          clearInterval(view._gameLoop);
         } 
-        
     }); 
-  }
-  
-  moveGreg(dir) {
-    switch (dir) {
-      case "left":
-        this._model.moveGreg(-this._speed, 0);
-        break;
-      case "up":
-        this._model.moveGreg(0, -this._speed);
-        break;
-      case "right":
-        this._model.moveGreg(this._speed, 0);
-        break;
-      case "down":
-        this._model.moveGreg(0, this._speed);
-        break;
-      default: return;
-    }
+
+  view.on("gameUpdate", (values) => this.updateModel(values));
   }
 
-  movePythons(dir) {
-    switch (dir) {
-      case "left":
-        this._model.movePythons(-this._speed, 0);
-        break;
-      case "up":
-        this._model.movePythons(0, -this._speed);
-        break;
-      case "right":
-        this._model.movePythons(this._speed, 0);
-        break;
-      case "down":
-        this._model.movePythons(0, this._speed);
-        break;
-      default: return;
-    }
+  updateModel(values) {
+    this._model.moveGreg(values.gregDir);
+    this._model.movePythons(values.pythonDir);
+
+    this._model.checkCollision();
   }
   
 

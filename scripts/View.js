@@ -9,60 +9,50 @@ class View extends EventEmitter {
 		this._model = model;
 		this._elements = elements;
 		this._updateSpeed = 50; // ms
-		this._gregDir = "stop";
-		this._pythonDir = "stop";
 		this._gameState = "stop";
 		
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
+		model.on("eatPellet", pellet => this.removePellet(pellet)).on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
+    	model.on("debugLightChanged", state => this.debugLight(state));
 
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
 				switch (evt.which) {
 					case 37: // left
-						this.setGregDir("left");
+						this._gameValues.gregDir = "left";
 						break;
 					case 38: // up
-						this.setGregDir("up");
+						this._gameValues.gregDir = "up";
 						break;
 					case 39: // right
-						this.setGregDir("right");
+						this._gameValues.gregDir = "right";
 						break;
 					case 40: // down
-						this.setGregDir("down");
+						this._gameValues.gregDir = "down";
 						break;
 					case 65: // a
-						this.setPythonDir("left");
+						this._gameValues.pythonDir = "left";
 						break;
 					case 87: // w
-						this.setPythonDir("up");
+						this._gameValues.pythonDir = "up";
 						break;
 					case 68: // d
-						this.setPythonDir("right");
+						this._gameValues.pythonDir = "right";
 						break;
 					case 83: // s
-						this.setPythonDir("down");
+						this._gameValues.pythonDir = "down";
 						break;
 					case 27: // esc
-						if (this._gregUpdate) {
-							clearInterval(this._gregUpdate);
-							delete this._gregUpdate;
-							this._gregDir = "stop";
-						}
-						if (this._pythonUpdate) {
-							clearInterval(this._pythonUpdate);
-							delete this._pythonUpdate;
-							this._gregDir = "stop";
-						}
+							clearInterval(this._gameLoop);
+							this._gameState = "stop";
 						break;
 					default: return; // exit this handler for other keys
 				}
 			} else if (this._gameState == "stop"){
 				switch(evt.which) {
 					case 80: // p
-					this._gameState = "start";
-					this.setGregDir("right");
-					this.setPythonDir("right");
+					this.gameStart();
 					break;
 					default: return;
 				}
@@ -70,29 +60,42 @@ class View extends EventEmitter {
 			evt.preventDefault(); // prevent the default action (scroll / move caret)
 		});
 
+		this._gameValues = {
+			gregDir: "up",
+			pythonDir: "up"
+		};
 	}
 
-	setGregDir(dir) {
-		if (this._gregDir != dir) {
-			if (this._gregUpdate) {
-				clearInterval(this._gregUpdate);
-			}
-			this._gregUpdate = setInterval(() => this.emit("gregMove", dir), this._updateSpeed);
-			this._gregDir = dir;
+	gameStart() {
+		this._gameState = "start";
+		this._gameLoop = setInterval(() => this.emit("gameUpdate", this._gameValues), this._updateSpeed);
+	}
+
+	// TODO:
+	// Display winner
+	// Press 'r' to play again
+	gameOver(winner) {
+		if (winner === "greg") {
+			console.log("Greg wins!");
+		} else if (winner === "pythons") {
+			console.log("Pythons win!");
 		}
+	}
+
+	// TODO:
+	// Remove one life from display
+	loseLife() {
+
+	}
+
+	// TODO:
+	// Remove pellet from display
+	removePellet(pellet) {
+
 	}
 
 	moveGreg(pos) {
 		$(this._elements.greg).css({ left: pos.x, top: pos.y });
-	}
-
-	setPythonDir(dir) {
-		if (this._pythonDir != dir) {
-			if (this._pythonUpdate) {
-				clearInterval(this._pythonUpdate);
-			}
-			this._pythonUpdate = setInterval(() => this.emit("pythonsMove", dir), this._updateSpeed);
-		}
 	}
 
 	movePythons(posList) {
@@ -100,6 +103,7 @@ class View extends EventEmitter {
 			$(this._elements.pythons[i]).css({ left: posList[i].x, top: posList[i].y });
 		}
 	}
+  
 	renderLives(numLives){
 		let livesContainer = document.getElementById('lives'); 
 		let livesText = document.createElement('span'); 
@@ -112,5 +116,15 @@ class View extends EventEmitter {
 			let rect = span.getBoundingClientRect();  
 			livesContainer.appendChild(span); 
 		} 
-	  }
+	}
+
+	debugLight(state) {
+		if (state) {
+			//$(this._elements.debug_light).css({ visibility: "visible" });
+			this._elements.debug_light.style.visibility = "visible";
+		} else {
+			//$(this._elements.debug_light).css({ visibility: "hidden" });
+			this._elements.debug_light.style.visibility = "hidden";
+		}
+	}
 }

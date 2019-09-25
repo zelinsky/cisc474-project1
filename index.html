@@ -30,6 +30,7 @@
         <div class="python" id="python2"></div>
         <div class="python" id="python3"></div>
         <div class="python" id="python4"></div>
+        <div id="debug_light"></div>
     </div>
     <div id="status">
         <button class="btn btn-primary" id="start">Start</button> 
@@ -41,17 +42,12 @@
             const model = new Model(),
                 view = new View(model, {
                     "greg": document.getElementById("greg"),
-                    "pythons": [document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3"), document.getElementById("python4"),],
-                    "mazemap": document.getElementById("mazemap")
-                }),
+                    "pythons": [document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3"), document.getElementById("python4")],
+                    "debug_light": document.getElementById("debug_light")
+                });
                 controller = new Controller(model, view);
         });
     </script>
-
-    <img class="maze" src="images/gregman-maze.png" usemap="maze-map">
-
-    <map class="maze" name="maze-map" id="mazemap">
-    </map>
 </body>
 
 </html>
