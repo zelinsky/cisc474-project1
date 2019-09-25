@@ -93,7 +93,6 @@ class View extends EventEmitter {
 	// TODO:
 	// Draw pellets
 	drawPellets(pellets) {
-		console.log(pellets);
 		pellets.forEach(pellet => {
 			$("#maze").append(`<div class="semicolon" style="left:${pellet._posX}px;top:${pellet._posY}px"></div>`);
 		});
