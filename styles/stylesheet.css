@@ -10,6 +10,10 @@ body {
     content:url("../images/greg.png");
     width: 30px;
     height: 30px;
+    display: inline-block;
+}
+
+#greg {
     left: 413px;
     top: 374px;
 }

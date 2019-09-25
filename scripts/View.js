@@ -14,7 +14,6 @@ class View extends EventEmitter {
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
 		model.on("eatPellet", pellet => this.removePellet(pellet)).on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
-    	model.on("debugLightChanged", state => this.debugLight(state));
 
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
@@ -49,14 +48,14 @@ class View extends EventEmitter {
 						break;
 					default: return; // exit this handler for other keys
 				}
-			} else if (this._gameState == "stop"){
+			} /*else if (this._gameState == "stop") {
 				switch(evt.which) {
 					case 80: // p
-					this.gameStart();
-					break;
+						this.gameStart();
+						break;
 					default: return;
 				}
-			}
+			} */
 			evt.preventDefault(); // prevent the default action (scroll / move caret)
 		});
 
@@ -120,21 +119,11 @@ class View extends EventEmitter {
 		livesText.innerText = 'Lives'; 
 		livesText.setAttribute('class', 'badge badge-secondary'); 
 		livesContainer.appendChild(livesText); 
-		for (let i = 0; i < numLives; i++){
+		for (let i = 0; i < numLives; i++) {
 			let span = document.createElement('span'); 
 			span.setAttribute('class', 'greg');
 			let rect = span.getBoundingClientRect();  
 			livesContainer.appendChild(span); 
-		} 
-	}
-
-	debugLight(state) {
-		if (state) {
-			//$(this._elements.debug_light).css({ visibility: "visible" });
-			this._elements.debug_light.style.visibility = "visible";
-		} else {
-			//$(this._elements.debug_light).css({ visibility: "hidden" });
-			this._elements.debug_light.style.visibility = "hidden";
 		}
 	}
 }

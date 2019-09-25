@@ -11,9 +11,9 @@ class Controller {
     this.start = document.getElementById("start"); 
     this.start.addEventListener('click', function(evt){
          if (view._gameState == "stop"){
-             view.gameStart();           
+             view.gameStart();       
          }
-    }); 
+    });
     view.renderLives(3); // replace this with model.getLives() or something
     this.stop = document.getElementById("stop"); 
     this.stop.addEventListener('click', function(evt){
