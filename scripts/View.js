@@ -64,12 +64,15 @@ class View extends EventEmitter {
 			gregDir: "up",
 			pythonDir: "up"
 		};
+		this.drawPellets(this._model._semicolons);
 	}
 
 	gameStart() {
 		this._gameState = "start";
 		this._gameLoop = setInterval(() => this.emit("gameUpdate", this._gameValues), this._updateSpeed);
 	}
+
+
 
 	// TODO:
 	// Display winner
@@ -85,7 +88,14 @@ class View extends EventEmitter {
 	// TODO:
 	// Remove one life from display
 	loseLife() {
+	}
 
+	// TODO:
+	// Draw pellets
+	drawPellets(pellets) {
+		pellets.forEach(pellet => {
+			$("#maze").append(`<div class="semicolon" style="left:${pellet._posX}px;top:${pellet._posY}px"></div>`);
+		});
 	}
 
 	// TODO:

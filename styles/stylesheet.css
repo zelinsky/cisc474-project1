@@ -56,3 +56,10 @@ body {
     left: 793px;
     top: 782px;
 }
+
+.semicolon {
+    position: absolute;
+    content:url("../images/GregMan\ Semicolon.png");
+    width: 4px;
+    height: 13px;
+}
