@@ -5,7 +5,7 @@ body {
     background-position: left top;
 }
 
-#greg {
+.greg {
     position: absolute;
     content:url("../images/greg.png");
     width: 30px;
@@ -20,6 +20,13 @@ body {
     width: 30px;
     height: 30px;
 }
+
+/* .maze{
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 50%; 
+    display: block;  
+} */
 
 #debug_light {
     content:url("../images/white-circle.png");
