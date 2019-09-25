@@ -5,13 +5,13 @@ body {
     background-position: left top;
 }
 
-#greg {
+.greg {
     position: absolute;
     content:url("../images/greg.png");
-    width: 35px;
-    height: 40px;
-    left: 200px;
-    top: 200px;
+    width: 30px;
+    height: 30px;
+    left: 413px;
+    top: 374px;
 }
 
 .python {
@@ -20,6 +20,13 @@ body {
     width: 30px;
     height: 30px;
 }
+
+/* .maze{
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 50%; 
+    display: block;  
+} */
 
 #debug_light {
     content:url("../images/white-circle.png");
@@ -31,23 +38,23 @@ body {
 }
 
 #python1 {
-    left: 200px;
-    top: 400px;
+    left: 34px;
+    top: 31px;
 }
 
 #python2 {
-    left: 350px;
-    top: 400px;
+    left: 793px;
+    top: 31px;
 }
 
 #python3 {
-    left: 500px;
-    top: 400px;
+    left: 34px;
+    top: 782px;
 }
 
 #python4 {
-    left: 650px;
-    top: 400px;
+    left: 793px;
+    top: 782px;
 }
 
 .semicolon {

@@ -6,32 +6,33 @@ class Controller {
   constructor(model, view) {
     this._model = model;
     this._view = view;
-    this._speed = 8;
+    this._speed = 8;  
 
-    view.on("gameUpdate", (values) => this.updateModel(values));
+    this.start = document.getElementById("start"); 
+    this.start.addEventListener('click', function(evt){
+         if (view._gameState == "stop"){
+             view.gameStart();           
+         }
+    }); 
+    view.renderLives(3); // replace this with model.getLives() or something
+    this.stop = document.getElementById("stop"); 
+    this.stop.addEventListener('click', function(evt){
+        if (view._gameState === "start"){
+          view._gameState = "stop"; 
+          clearInterval(view._gameLoop);
+        } 
+    }); 
+
+  view.on("gameUpdate", (values) => this.updateModel(values));
   }
 
   updateModel(values) {
     this._model.moveGreg(values.gregDir);
-    
-    switch (values.pythonDir) {
-      case "left":
-        this._model.movePythons(-this._speed, 0);
-        break;
-      case "up":
-        this._model.movePythons(0, -this._speed);
-        break;
-      case "right":
-        this._model.movePythons(this._speed, 0);
-        break;
-      case "down":
-        this._model.movePythons(0, this._speed);
-        break;
-      default: return;
-    }
+    this._model.movePythons(values.pythonDir);
 
     this._model.checkCollision();
   }
+  
 
 }
 

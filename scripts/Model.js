@@ -1,9 +1,9 @@
- // A Plyer is an object that has a postion and can move
+// A Plyer is an object that has a postion and can move
 class Player {
   constructor(x, y, w, h) {
     this._posX = x;
     this._posY = y;
-    this._dir = "right";
+    this._dir = "";
     this._lastPress = "";
     this._width = w;
     this._height = h;
@@ -65,13 +65,18 @@ class Model extends EventEmitter {
   constructor() {
     super();
     this._maze = new MazeNodes();
-    this._greg = new Greg(this._maze.NodeList[0].x - 20, this._maze.NodeList[0].y - 20);
+    this._greg = new Greg(this._maze.NodeList[48].x - 17, this._maze.NodeList[48].y - 17);
+    //console.log(this._maze.NodeList[48].x - 20);
+    //console.log(this._maze.NodeList[48].y - 20);
     this._pythons = [];
-    this._speed = 3;
+    let pythonStart = [0, 6, 119, 126];
+    this._speed = 5;
     for (let i = 0; i < 4; i++) {
-      this._pythons.push(new Python(this._maze.NodeList[48].x - 20, this._maze.NodeList[48].y - 20));
+      this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - 17, this._maze.NodeList[pythonStart[i]].y - 17));
+      //console.log(this._maze.NodeList[pythonStart[i]].x - 20);
+      //console.log(this._maze.NodeList[pythonStart[i]].y - 20);
     }
-
+    
     this._semicolons = [];
     for (let x = this._maze.NodeList[0].x ; x <= this._maze.NodeList[6].x; x += 15 ){
       this._semicolons.push(new Semicolon(x, this._maze.NodeList[0].y - 7));
@@ -397,8 +402,8 @@ class Model extends EventEmitter {
       this._semicolons.push(new Semicolon(this._maze.NodeList[15].x, y -7));
     }
 
-    this.emit("gregMoved", this._greg.move(0, 0));
-    this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
+    //this.emit("gregMoved", this._greg.move(0, 0));
+    //this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
   }
 
   /*moveGreg(x, y) {
@@ -407,27 +412,59 @@ class Model extends EventEmitter {
     this.emit("debugLightChanged", this._maze.nodeCollide(newPos.x, newPos.y));
   }*/
 
-  moveGreg(dir) {  // This function is an atrocity and needs to be fixed
+  movePlayer(player, dir) {
     var actualX = 0;
     var actualY = 0;
-    if (!this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y)) {
-      this._greg._lastPress = dir; // case for being in the middle of an edge
+    if (!this._maze.nodeCollide(player.getPos.x, player.getPos.y)) {
+      player._lastPress = dir; // case for being in the middle of an edge
+      switch (dir) {
+        case ("left"):
+          if (player._dir == "right") {
+            player._dir = dir;
+          }
+          break;
+        case ("right"):
+          if (player._dir == "left") {
+            player._dir = dir;
+          }
+          break;
+        case ("up"):
+          if (player._dir == "down") {
+            player._dir = dir;
+          }
+          break;
+        case ("down"):
+          if (player._dir == "up") {
+            player._dir = dir;
+          }
+          break;
+        default:
+          break;
+      }
+      player._lastPress = dir; // case for being in the middle of an edge
+      //console.log("Set lastPress to " + dir);
     } else {
-      if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, dir)) {
-        if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, this._greg._dir)) {
-          if (this._maze.dirBlocked(this._greg.getPos.x, this._greg.getPos.y, this._greg._lastPress)) {
-            this._greg._dir = "stop";   // case for the last key, current dir, and input are blocked
+      if (!this._maze.dirClear(player.getPos.x, player.getPos.y, dir)) {
+        if (!this._maze.dirClear(player.getPos.x, player.getPos.y, player._dir)) {
+          if (!this._maze.dirClear(player.getPos.x, player.getPos.y, player._lastPress)) {
+            //console.log("C1 [Input: " + dir + ", Current: " + player._dir + ", LastPress: " + player._lastPress + "] DECISION: stop");
+            player._dir = "stop";   // case for the last key, current dir, and input are blocked
           } else {
-            this._greg._dir = this._greg._lastPress;  // case for the current dir and input are blocked but the last key is good
+            //console.log("C2 [Input: " + dir + ", Current: " + player._dir + ", LastPress: " + player._lastPress + "] DECISION: " + player._lastPress);
+            player._dir = player._lastPress;  // case for the current dir and input are blocked but the last key is good
           }
         } else {
-          this._greg._lastPress = dir; // case for if the input is blocked but current is good
+          //console.log("C3 [Input: " + dir + ", Current: " + player._dir + ", LastPress: " + player._lastPress + "] DECISION: " + player._dir);
+          player._lastPress = dir; // case for if the input is blocked but current is good
         }
       } else {
-        this._greg._dir = dir;   // case for if the input dir is unblocked
+        //console.log("Input looks clear, going to node " + this._maze.dirClear(player.getPos.x, player.getPos.y, dir).id
+        //            + ", Input: " + dir + ", X: " + player.getPos.x + ", Y: " + player.getPos.y);
+        //console.log("C4 [Input: " + dir + ", Current: " + player._dir + ", LastPress: " + player._lastPress + "] DECISION: " + dir);
+        player._dir = dir;   // case for if the input dir is unblocked
       }
     }
-    switch (this._greg._dir) {  // handles updates for above branches
+    switch (player._dir) {  // handles updates for above branches
       case "left":
         actualX = -this._speed;
         actualY = 0;
@@ -447,16 +484,23 @@ class Model extends EventEmitter {
       default:
         actualX = 0;
         actualY = 0;
-        this._greg._lastPress = "";
+        player._lastPress = "";
     }
-    this.emit("gregMoved", this._greg.move(actualX, actualY));
-    this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
+
+    return {x: actualX, y: actualY};
   }
 
-  movePythons(x, y) {
+  moveGreg(dir) {  // This function is an atrocity and needs to be fixed
+    let pos = this.movePlayer(this._greg, dir);
+    this.emit("gregMoved", this._greg.move(pos.x, pos.y));
+    //this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
+  }
+
+  movePythons(dir) {
     let newPosList = []
     this._pythons.forEach(python => {
-      newPosList.push(python.move(x, y));
+      let pos = this.movePlayer(python, dir);
+      newPosList.push(python.move(pos.x, pos.y));
     });
     this.emit("pythonsMoved", newPosList);
   }
@@ -485,12 +529,12 @@ class Model extends EventEmitter {
         this._greg._posY < python._posY + python._height &&
         this._greg._posY + this._greg._height > python._posY) {
 
-          if (this._greg._poweredUp) {
-            this.pythonEaten(python);
-          } else {
-            this.gregEaten();
-          }
-     }
+        if (this._greg._poweredUp) {
+          this.pythonEaten(python);
+        } else {
+          this.gregEaten();
+        }
+      }
     });
   }
 
