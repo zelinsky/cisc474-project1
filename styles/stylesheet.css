@@ -8,8 +8,8 @@ body {
 #greg {
     position: absolute;
     content:url("../images/greg.png");
-    width: 35px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     left: 413px;
     top: 374px;
 }
