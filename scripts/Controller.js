@@ -11,11 +11,7 @@ class Controller {
     this.start = document.getElementById("start"); 
     this.start.addEventListener('click', function(evt){
          if (view._gameState == "stop"){
-             view._gameState = "start"; 
-             view._gameValues.gregDir = "up";
-             view._gameValues.pythonDir = "up";
-             view.setPythonDir("right"); 
-             
+             view.gameStart();           
          }
     }); 
     view.renderLives(3); // replace this with model.getLives() or something
