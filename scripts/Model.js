@@ -52,7 +52,7 @@ class Semicolon extends EventEmitter {
     this._posX = x;
     this._posY = y;
     this._width = 3;
-    this._height = 13;
+    this._height = 11;
     this._visible = true;
   }
 }
