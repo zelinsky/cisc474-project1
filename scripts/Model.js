@@ -518,27 +518,25 @@ class Model extends EventEmitter {
 
   // TODO:
   // Send Python back to starting position, available after X seconds.
-  pythonEaten(python) {
-
+  pythonEaten(python, id) {
+    this.emit("eatPython", id);
   }
 
   checkCollision() {
-    this._pythons.forEach(python => {
+    this._pythons.forEach((python, index) => {
       if (this._greg._posX < python._posX + python._width &&
         this._greg._posX + this._greg._width > python._posX &&
         this._greg._posY < python._posY + python._height &&
         this._greg._posY + this._greg._height > python._posY) {
 
         if (this._greg._poweredUp) {
-          this.pythonEaten(python);
+          this.pythonEaten(python, index);
         } else {
           this.gregEaten();
         }
       }
     });
-  }
 
-  checkCollision() {
     this._semicolons.forEach((semicolon, index) => {
       if (this._greg._posX < semicolon._posX + semicolon._width &&
         this._greg._posX + this._greg._width > semicolon._posX &&
@@ -549,7 +547,7 @@ class Model extends EventEmitter {
           this.emit("eatSemicolon", index);
         } 
   });
-}
+  }
 
   // TODO:
   // Check if Greg can eat a pellet at current position

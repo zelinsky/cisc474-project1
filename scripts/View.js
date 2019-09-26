@@ -14,6 +14,7 @@ class View extends EventEmitter {
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
 		model.on("eatSemicolon", semicolonId => this.removeSemicolon(semicolonId)).on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
+		model.on("eatPython", pythonId => this.eatPython(pythonId));
 
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
@@ -87,6 +88,12 @@ class View extends EventEmitter {
 	// TODO:
 	// Remove one life from display
 	loseLife() {
+	}
+
+
+	//TODO
+	eatPython(pythonId) {
+		$(`#python${pythonId}`);
 	}
 
 	// TODO:
