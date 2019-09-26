@@ -539,14 +539,14 @@ class Model extends EventEmitter {
   }
 
   checkCollision() {
-    this._semicolons.forEach(semicolon, index=> {
+    this._semicolons.forEach((semicolon, index) => {
       if (this._greg._posX < semicolon._posX + semicolon._width &&
         this._greg._posX + this._greg._width > semicolon._posX &&
         this._greg._posY < semicolon._posY + semicolon._height &&
         this._greg._posY + this._greg._height > semicolon._posY && semicolon._visible)
         {
           semicolon._visible = false;
-          this.emit("eatPellet", index);
+          this.emit("eatSemicolon", index);
         } 
   });
 }
