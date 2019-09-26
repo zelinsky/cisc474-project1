@@ -47,7 +47,7 @@ class Python extends Player {
   }
 }
 class Semicolon extends EventEmitter {
-  constructor(x, y) {
+  constructor(x, y, id) {
     super();
     this._posX = x;
     this._posY = y;
@@ -537,6 +537,19 @@ class Model extends EventEmitter {
       }
     });
   }
+
+  checkCollision() {
+    this._semicolons.forEach((semicolon, index) => {
+      if (this._greg._posX < semicolon._posX + semicolon._width &&
+        this._greg._posX + this._greg._width > semicolon._posX &&
+        this._greg._posY < semicolon._posY + semicolon._height &&
+        this._greg._posY + this._greg._height > semicolon._posY && semicolon._visible)
+        {
+          semicolon._visible = false;
+          this.emit("eatSemicolon", index);
+        } 
+  });
+}
 
   // TODO:
   // Check if Greg can eat a pellet at current position
