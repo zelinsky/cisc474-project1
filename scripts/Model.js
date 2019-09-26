@@ -47,7 +47,7 @@ class Python extends Player {
   }
 }
 class Semicolon extends EventEmitter {
-  constructor(x, y) {
+  constructor(x, y, id) {
     super();
     this._posX = x;
     this._posY = y;

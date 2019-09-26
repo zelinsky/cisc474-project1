@@ -63,7 +63,7 @@ class View extends EventEmitter {
 			gregDir: "up",
 			pythonDir: "up"
 		};
-		this.drawPellets(this._model._semicolons);
+		this.drawSemicolons(this._model._semicolons);
 	}
 
 	gameStart() {
@@ -91,16 +91,16 @@ class View extends EventEmitter {
 
 	// TODO:
 	// Draw pellets
-	drawPellets(pellets) {
-		pellets.forEach(pellet => {
-			$("#maze").append(`<div class="semicolon" style="left:${pellet._posX}px;top:${pellet._posY}px"></div>`);
+	drawSemicolons(semicolons) {
+		semicolons.forEach(semicolon, index => {
+			$("#maze").append(`<div id="sc${index}" class="semicolon" style="left:${semicolon._posX}px;top:${semicolon._posY}px"></div>`);
 		});
 	}
 
 	// TODO:
-	// Remove pellet from display
-	removePellet(pellet) {
-
+	// Remove semicolon from display
+	removeSemicolon(semicolonId) {
+		$(`#sc${semicolonId}`).hide();
 	}
 
 	moveGreg(pos) {
