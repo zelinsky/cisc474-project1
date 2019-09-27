@@ -72,7 +72,10 @@ class View extends EventEmitter {
 		this._gameLoop = setInterval(() => this.emit("gameUpdate", this._gameValues), this._updateSpeed);
 	}
 
-
+	gamePause() {
+		this._gameState = "stop";
+		clearInterval(this._gameLoop);
+	}
 
 	// TODO:
 	// Display winner

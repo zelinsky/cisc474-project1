@@ -7,22 +7,18 @@ class Controller {
     this._model = model;
     this._view = view;
 
-    this.start = document.getElementById("start"); 
-    this.start.addEventListener('click', function(evt){
+    $("#play").click(function(evt){
          if (view._gameState == "stop"){
-             view.gameStart();       
+            $("#play").text("Pause");   
+            view.gameStart();       
+         } else if (view._gameState == "start") {
+            $("#play").text("Play")
+            view.gamePause();
          }
     });
     view.renderLives(3); // replace this with model.getLives() or something
     view.makeScore(0);
-    this.stop = document.getElementById("stop"); 
-    this.stop.addEventListener('click', function(evt){
-        if (view._gameState === "start"){
-          view._gameState = "stop"; 
-          clearInterval(view._gameLoop);
-        } 
-    }); 
-
+    
   view.on("gameUpdate", (values) => this.updateModel(values));
   }
 
