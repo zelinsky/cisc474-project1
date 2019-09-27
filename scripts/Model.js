@@ -66,7 +66,7 @@ class Model extends EventEmitter {
     this._speed = 10;
     this._maze = new MazeNodes(this._speed);
     this._pelletData = new PelletData();
-    this._greg = new Greg(this._maze.NodeList[48].x - 17, this._maze.NodeList[48].y - 17);
+    this._greg = new Greg(this._maze.NodeList[48].x - this._maze.OFFSET, this._maze.NodeList[48].y - this._maze.OFFSET);
     //console.log(this._maze.NodeList[48].x - 20);
     //console.log(this._maze.NodeList[48].y - 20);
     this._score = 0;
@@ -74,7 +74,7 @@ class Model extends EventEmitter {
     let pythonStart = [0, 6, 119, 126];
     this._semicolonsEaten = 0;
     for (let i = 0; i < 4; i++) {
-      this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - 17, this._maze.NodeList[pythonStart[i]].y - 17));
+      this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - this._maze.OFFSET, this._maze.NodeList[pythonStart[i]].y - this._maze.OFFSET));
       //console.log(this._maze.NodeList[pythonStart[i]].x - 20);
       //console.log(this._maze.NodeList[pythonStart[i]].y - 20);
     }
@@ -84,7 +84,7 @@ class Model extends EventEmitter {
     for (let i = 0; i < this._pelletData._yCoords.length; i++) {
       for (let j = 0; j < this._pelletData._xCoords.length; j++) {
         if (this._pelletData._pelletMap[i][j]) {
-          this._semicolons.push(new Semicolon(this._pelletData._xCoords[j] - 5, this._pelletData._yCoords[i] - 5));
+          this._semicolons.push(new Semicolon(this._pelletData._xCoords[j] - this._pelletData.X_PELLET_OFFSET, this._pelletData._yCoords[i] - this._pelletData.Y_PELLET_OFFSET));
         }
       }
     }
@@ -224,8 +224,8 @@ class Model extends EventEmitter {
     for (let y = this._maze.NodeList[6].y + 23 ; y < this._maze.NodeList[15].y - 15; y += 23 ){
       this._semicolons.push(new Semicolon(this._maze.NodeList[6].x, y -7));
     }
-    for (let y = this._maze.NodeList[17].y + 23 ; y < this._maze.NodeList[44].y - 15; y += 23 ){
-      this._semicolons.push(new Semicolon(this._maze.NodeList[17].x, y -7));
+    for (let y = this._maze.NodeList[this._maze.OFFSET].y + 23 ; y < this._maze.NodeList[44].y - 15; y += 23 ){
+      this._semicolons.push(new Semicolon(this._maze.NodeList[this._maze.OFFSET].x, y -7));
     }
     for (let y = this._maze.NodeList[18].y ; y < this._maze.NodeList[26].y - 15; y += 23 ){
       this._semicolons.push(new Semicolon(this._maze.NodeList[18].x, y -7));
@@ -294,10 +294,10 @@ class Model extends EventEmitter {
     for (let y = this._maze.NodeList[79].y + 20 ; y < this._maze.NodeList[94].y ; y += 20 ){
       this._semicolons.push(new Semicolon(this._maze.NodeList[79].x, y -7));
     }
-    for (let y = this._maze.NodeList[94].y + 17 ; y < this._maze.NodeList[103].y ; y += 20 ){
+    for (let y = this._maze.NodeList[94].y + this._maze.OFFSET ; y < this._maze.NodeList[103].y ; y += 20 ){
       this._semicolons.push(new Semicolon(this._maze.NodeList[94].x, y -7));
     }
-    for (let y = this._maze.NodeList[81].y + 17 ; y < this._maze.NodeList[96].y ; y += 20 ){
+    for (let y = this._maze.NodeList[81].y + this._maze.OFFSET ; y < this._maze.NodeList[96].y ; y += 20 ){
       this._semicolons.push(new Semicolon(this._maze.NodeList[81].x, y -7));
     }
 
@@ -340,8 +340,8 @@ class Model extends EventEmitter {
     for (let y = this._maze.NodeList[115].y + 20 ; y < this._maze.NodeList[124].y - 5; y += 20 ){
       this._semicolons.push(new Semicolon(this._maze.NodeList[115].x, y -7));
     }
-    for (let y = this._maze.NodeList[117].y + 20 ; y < this._maze.NodeList[125].y - 5; y += 20 ){
-      this._semicolons.push(new Semicolon(this._maze.NodeList[117].x, y -7));
+    for (let y = this._maze.NodeList[1this._maze.OFFSET].y + 20 ; y < this._maze.NodeList[125].y - 5; y += 20 ){
+      this._semicolons.push(new Semicolon(this._maze.NodeList[1this._maze.OFFSET].x, y -7));
     }
     for (let y = this._maze.NodeList[118].y + 20 ; y < this._maze.NodeList[126].y - 5; y += 20 ){
       this._semicolons.push(new Semicolon(this._maze.NodeList[118].x, y -7));
@@ -554,8 +554,8 @@ class Model extends EventEmitter {
      this._score += pythonsEatenSincePoweredUp * 200        */
     this._score += 100; 
     this.emit("updateScore", this._score);
-    this._pythons[index]._posX = this._maze.NodeList[48].x -17;
-    this._pythons[index]._posY = this._maze.NodeList[48].y -17;
+    this._pythons[index]._posX = this._maze.NodeList[48].x -this._maze.OFFSET;
+    this._pythons[index]._posY = this._maze.NodeList[48].y -this._maze.OFFSET;
     this.emit("eatPython", index);
   }
 
