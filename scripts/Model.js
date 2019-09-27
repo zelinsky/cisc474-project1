@@ -63,14 +63,14 @@ class Semicolon extends EventEmitter {
 class Model extends EventEmitter {
   constructor() {
     super();
-    this._maze = new MazeNodes();
+    this._speed = 10;
+    this._maze = new MazeNodes(this._speed);
     this._greg = new Greg(this._maze.NodeList[48].x - 17, this._maze.NodeList[48].y - 17);
     //console.log(this._maze.NodeList[48].x - 20);
     //console.log(this._maze.NodeList[48].y - 20);
     this._score = 0;
     this._pythons = [];
     let pythonStart = [0, 6, 119, 126];
-    this._speed = 5;
     this._semicolonsEaten = 0;
     for (let i = 0; i < 4; i++) {
       this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - 17, this._maze.NodeList[pythonStart[i]].y - 17));
@@ -465,6 +465,7 @@ class Model extends EventEmitter {
         player._dir = dir;   // case for if the input dir is unblocked
       }
     }
+    var node = this._maze.collidingNode(player.getPos.x, player.getPos.y);
     switch (player._dir) {  // handles updates for above branches
       case "left":
         actualX = -this._speed;
@@ -488,20 +489,40 @@ class Model extends EventEmitter {
         player._lastPress = "";
     }
 
-    return {x: actualX, y: actualY};
+    return {x: actualX, y: actualY, node: node};
+  }
+
+  shiftSnap(shiftData, mover) {
+    if (shiftData.x == 0) {
+      shiftData.x = shiftData.node.x - this._maze.OFFSET - mover._posX;
+      //console.log("Shifted greg over in x by " + shift.x + " using nodeX:" + shift.node.x + ", offset:", + this._maze.OFFSET + ", gregX: " + this._greg._posX);
+    }
+    if (shiftData.y == 0) {
+      shiftData.y = shiftData.node.y - this._maze.OFFSET - mover._posY;
+      //console.log("Shifted greg over in y by " + shift.y + " using nodeY:" + shift.node.y + ", offset:", + this._maze.OFFSET + ", gregY: " + this._greg._posY);
+    }
+    return shiftData;
   }
 
   moveGreg(dir) {
-    let pos = this.movePlayer(this._greg, dir);
-    this.emit("gregMoved", this._greg.move(pos.x, pos.y));
+    let shift = this.movePlayer(this._greg, dir);
+    var diff = 0;
+    if (shift.node) {
+      shift = this.shiftSnap(shift, this._greg);
+    }
+    this.emit("gregMoved", this._greg.move(shift.x, shift.y));
     //this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
   }
 
   movePythons(dir) {
+    var shift;
     let newPosList = []
     this._pythons.forEach(python => {
-      let pos = this.movePlayer(python, dir);
-      newPosList.push(python.move(pos.x, pos.y));
+      shift = this.movePlayer(python, dir);
+      if (shift.node) {
+        shift = this.shiftSnap(shift, python);
+      }
+      newPosList.push(python.move(shift.x, shift.y));
     });
     this.emit("pythonsMoved", newPosList);
   }
