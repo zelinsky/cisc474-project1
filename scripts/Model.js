@@ -80,6 +80,16 @@ class Model extends EventEmitter {
     }
     
     this._semicolons = [];
+
+    for (let i = 0; i < this._pelletData._yCoords.length; i++) {
+      for (let j = 0; j < this._pelletData._xCoords.length; j++) {
+        if (this._pelletData._pelletMap[i][j]) {
+          this._semicolons.push(new Semicolon(this._pelletData._xCoords[j] - 5, this._pelletData._yCoords[i] - 5));
+        }
+      }
+    }
+ 
+    /*
     for (let x = this._maze.NodeList[0].x ; x <= this._maze.NodeList[6].x; x += 15 ){
       this._semicolons.push(new Semicolon(x, this._maze.NodeList[0].y - 7));
     }
@@ -402,11 +412,12 @@ class Model extends EventEmitter {
     }
     for (let y = this._maze.NodeList[15].y + 23 ; y < this._maze.NodeList[25].y; y += 23 ){
       this._semicolons.push(new Semicolon(this._maze.NodeList[15].x, y -7));
-    }
+    } */
     this._numberOfSemicolons = this._semicolons.length;
     //this.emit("gregMoved", this._greg.move(0, 0));
     //this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
   }
+  
 
   /*moveGreg(x, y) {
     let newPos = this._greg.move(x, y);
