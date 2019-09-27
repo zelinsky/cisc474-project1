@@ -65,6 +65,7 @@ class Model extends EventEmitter {
     super();
     this._speed = 10;
     this._maze = new MazeNodes(this._speed);
+    this._pelletData = new PelletData();
     this._greg = new Greg(this._maze.NodeList[48].x - 17, this._maze.NodeList[48].y - 17);
     //console.log(this._maze.NodeList[48].x - 20);
     //console.log(this._maze.NodeList[48].y - 20);
