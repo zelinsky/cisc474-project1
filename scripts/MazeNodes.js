@@ -1,6 +1,6 @@
 class MazeNodes {
-    constructor() {
-        this.NODE_BOUND = 3;
+    constructor(speed) {
+        this.NODE_BOUND = speed - 2;
         this.OFFSET = 17;
         this.NodeList = [{ 'adjacency': [1, 7], 'id': 0, 'x': 54, 'y': 51 },
         { 'adjacency': [0, 2, 8], 'id': 1, 'x': 191, 'y': 51 },
