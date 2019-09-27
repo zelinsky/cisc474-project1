@@ -14,7 +14,8 @@ class View extends EventEmitter {
 		// attach model listeners
 		model.on("gregMoved", newPos => this.moveGreg(newPos)).on("pythonsMoved", newPosList => this.movePythons(newPosList));
 		model.on("eatSemicolon", semicolonId => this.removeSemicolon(semicolonId)).on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
-
+		model.on("eatPython",  pythonID =>this.removePython(pythonID));
+		model.on("updateScore",  score =>this.updateScore(score));
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
 				switch (evt.which) {
@@ -79,8 +80,9 @@ class View extends EventEmitter {
 	gameOver(winner) {
 		if (winner === "greg") {
 			console.log("Greg wins!");
+     $("#maze").append(`<div id="end" class="endScreen" style="left:${0}px;top:5%"></div>`);
 		} else if (winner === "pythons") {
-			console.log("Pythons win!");
+			console.log("Pythons winnnnn!");
 		}
 	}
 
@@ -102,6 +104,12 @@ class View extends EventEmitter {
 	removeSemicolon(semicolonId) {
 		$(`#sc${semicolonId}`).hide();
 	}
+	
+	removePython(pythonId) {
+		console.log(pythonId);
+		$(`#python${pythonId}`).hide();
+		$(`#python${pythonId}`).delay(3000).show(0);
+	} 
 
 	moveGreg(pos) {
 		$(this._elements.greg).css({ left: pos.x, top: pos.y });
@@ -119,11 +127,24 @@ class View extends EventEmitter {
 		livesText.innerText = 'Lives'; 
 		livesText.setAttribute('class', 'badge badge-secondary'); 
 		livesContainer.appendChild(livesText); 
-		for (let i = 0; i < numLives; i++) {
+		/*for (let i = 0; i < numLives; i++) {
 			let span = document.createElement('span'); 
 			span.setAttribute('class', 'greg');
 			let rect = span.getBoundingClientRect();  
 			livesContainer.appendChild(span); 
-		}
+		} */ 
+	}
+	makeScore(score){
+		let scoreContainer = document.getElementById('score'); 
+		let scoreText = document.createElement('span'); 
+		scoreText.innerText = 'Score: ' + score; 
+		scoreText.setAttribute('class', "badge badge-primary"); 	
+		let livesContainer = document.getElementById('lives');
+		livesContainer.appendChild(scoreContainer);
+		scoreContainer.appendChild(scoreText); 
+	}
+	updateScore(score){
+		let scoreContainer = document.getElementById('score');
+		scoreContainer.firstChild.innerText = 'Score: ' + score; 
 	}
 }
