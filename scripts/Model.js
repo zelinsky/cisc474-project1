@@ -37,7 +37,6 @@ class Greg extends Player {
     this._lives = 3;
     this._poweredUp = false;
   }
-
 }
 
 // Ghosts
@@ -68,9 +67,11 @@ class Model extends EventEmitter {
     this._greg = new Greg(this._maze.NodeList[48].x - 17, this._maze.NodeList[48].y - 17);
     //console.log(this._maze.NodeList[48].x - 20);
     //console.log(this._maze.NodeList[48].y - 20);
+    this._score = 0;
     this._pythons = [];
     let pythonStart = [0, 6, 119, 126];
     this._speed = 5;
+    this._semicolonsEaten = 0;
     for (let i = 0; i < 4; i++) {
       this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - 17, this._maze.NodeList[pythonStart[i]].y - 17));
       //console.log(this._maze.NodeList[pythonStart[i]].x - 20);
@@ -401,7 +402,7 @@ class Model extends EventEmitter {
     for (let y = this._maze.NodeList[15].y + 23 ; y < this._maze.NodeList[25].y; y += 23 ){
       this._semicolons.push(new Semicolon(this._maze.NodeList[15].x, y -7));
     }
-
+    this._numberOfSemicolons = this._semicolons.length;
     //this.emit("gregMoved", this._greg.move(0, 0));
     //this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
   }
@@ -515,49 +516,48 @@ class Model extends EventEmitter {
 
     }
   }
-
-  // TODO:
-  // Send Python back to starting position, available after X seconds.
-  pythonEaten(python) {
-
+  pythonEaten(index) {
+    /*once the powerup is working this line will be:
+     this._score += pythonsEatenSincePoweredUp * 200        */
+    this._score += 100; 
+    this.emit("updateScore", this._score);
+    this._pythons[index]._posX = this._maze.NodeList[48].x -17;
+    this._pythons[index]._posY = this._maze.NodeList[48].y -17;
+    this.emit("eatPython", index);
   }
 
   checkCollision() {
-    this._pythons.forEach(python => {
+    this._pythons.forEach((python,index) => {
       if (this._greg._posX < python._posX + python._width &&
         this._greg._posX + this._greg._width > python._posX &&
         this._greg._posY < python._posY + python._height &&
         this._greg._posY + this._greg._height > python._posY) {
-
-        if (this._greg._poweredUp) {
-          this.pythonEaten(python);
+         if (true){ // if (this._greg._poweredUp) {
+          this.pythonEaten(index);
         } else {
           this.gregEaten();
         }
       }
     });
-  }
-
-  checkCollision() {
     this._semicolons.forEach((semicolon, index) => {
       if (this._greg._posX < semicolon._posX + semicolon._width &&
         this._greg._posX + this._greg._width > semicolon._posX &&
         this._greg._posY < semicolon._posY + semicolon._height &&
         this._greg._posY + this._greg._height > semicolon._posY && semicolon._visible)
         {
+          this._score += 10;
+          this.emit("updateScore", this._score);
+          this._semicolonsEaten++;
+          if (this._semicolonsEaten == this._numberOfSemicolons){
+            this.emit("gameOver", "greg");
+          }
           semicolon._visible = false;
           this.emit("eatSemicolon", index);
         } 
   });
-}
-
-  // TODO:
-  // Check if Greg can eat a pellet at current position
-  // Remove the pellet from the game
-  // If no pellets left, Greg wins
-  eatPellet() {
-    let pellet = 0;
-    this.emit("eatPellet", pellet);
   }
+
+
+  
 
 }
