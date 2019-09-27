@@ -490,7 +490,7 @@ class Model extends EventEmitter {
     return {x: actualX, y: actualY};
   }
 
-  moveGreg(dir) {  // This function is an atrocity and needs to be fixed
+  moveGreg(dir) {
     let pos = this.movePlayer(this._greg, dir);
     this.emit("gregMoved", this._greg.move(pos.x, pos.y));
     //this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));

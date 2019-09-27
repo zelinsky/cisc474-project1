@@ -6,7 +6,6 @@ class Controller {
   constructor(model, view) {
     this._model = model;
     this._view = view;
-    this._speed = 8;  
 
     this.start = document.getElementById("start"); 
     this.start.addEventListener('click', function(evt){
