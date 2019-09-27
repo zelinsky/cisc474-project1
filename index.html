@@ -30,13 +30,14 @@
         <div class="python" id="python1"></div>
         <div class="python" id="python2"></div>
         <div class="python" id="python3"></div>
-        <div id="debug_light"></div>
+        <!--<div id="debug_light"></div>-->
     </div>
-    <div id="status">
-        <button class="btn btn-primary" id="start">Start</button> 
-        <button class="btn btn-primary" id="stop">Stop</button> 
-        <span id="lives"></span>
-        <span id="score"></span>
+    <div id="status" class="container">
+        <div class="row">
+            <button class="btn btn-primary" id="play">Play</button>
+            <span id="lives"></span>
+            <span id="score"></span>
+        </div>
     </div>
     <script>
         $(document).ready(() => {
@@ -45,7 +46,7 @@
                     "greg": document.getElementById("greg"),
                     "pythons": [document.getElementById("python0"), document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3")]
                 });
-                controller = new Controller(model, view);
+            controller = new Controller(model, view);
         });
     </script>
 </body>
