@@ -6,6 +6,7 @@ class Controller {
   constructor(model, view) {
     this._model = model;
     this._view = view;
+  
 
     $("#play").click(function(evt){
          if (view._gameState == "stop"){
@@ -16,6 +17,10 @@ class Controller {
             view.gamePause();
          }
     });
+
+    
+     
+  
     view.renderLives(3); // replace this with model.getLives() or something
     view.makeScore(0);
     

@@ -81,11 +81,14 @@ class View extends EventEmitter {
 	// Display winner
 	// Press 'r' to play again
 	gameOver(winner) {
+		$("#play").text("Play Again")
+		this._gameState = "end";
 		if (winner === "greg") {
 			console.log("Greg wins!");
-     $("#maze").append(`<div id="end" class="endScreen" style="left:${0}px;top:5%"></div>`);
+			$("#maze").append(`<div id="end" class="winnerEndScreen" style="left:${0}px;top:5%"></div>`);
 		} else if (winner === "pythons") {
 			console.log("Pythons winnnnn!");
+			$("#maze").append(`<div id="end" class="endScreen" style="left:${0}px;top:5%"></div>`);
 		}
 	}
 
@@ -130,12 +133,12 @@ class View extends EventEmitter {
 		livesText.innerText = 'Lives'; 
 		livesText.setAttribute('class', 'badge badge-secondary'); 
 		livesContainer.appendChild(livesText); 
-		/*for (let i = 0; i < numLives; i++) {
+		for (let i = 0; i < numLives; i++) {
 			let span = document.createElement('span'); 
-			span.setAttribute('class', 'greg');
+			span.setAttribute('class', 'relativeGreg');
 			let rect = span.getBoundingClientRect();  
 			livesContainer.appendChild(span); 
-		} */ 
+		} 
 	}
 	makeScore(score){
 		let scoreContainer = document.getElementById('score'); 

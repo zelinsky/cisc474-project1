@@ -219,6 +219,8 @@ class Model extends EventEmitter {
   // TODO:
   // Place sprites back to starting positions (if Greg still has lives left)
   gregEaten() {
+    this._greg._posX = this._maze.NodeList[48].x -this._maze.OFFSET;
+    this._greg._posY = this._maze.NodeList[48].y -this._maze.OFFSET;
     this.emit("loseLife");
     if (--this._greg._lives === 0) { // Decrease life, if 0 lives left, game ends
       this.emit("gameOver", "pythons");
@@ -242,7 +244,7 @@ class Model extends EventEmitter {
         this._greg._posX + this._greg._width > python._posX &&
         this._greg._posY < python._posY + python._height &&
         this._greg._posY + this._greg._height > python._posY) {
-         if (true){ // if (this._greg._poweredUp) {
+         if (this._greg._poweredUp) {
           this.pythonEaten(index);
         } else {
           this.gregEaten();

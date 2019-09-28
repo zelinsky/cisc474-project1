@@ -12,6 +12,14 @@ body {
     height: 30px;
     display: inline-block;
 }
+.relativeGreg {
+    position: relative;
+    content:url("../images/greg.png");
+    width: 30px;
+    height: 30px;
+
+}
+
 
 #greg {
     left: 413px;
@@ -75,6 +83,12 @@ body {
     height: 95%;
 }
 
+.winnerEndScreen {
+    position: absolute;
+    content:url("../images/WinnerEndScreen.png");
+    width: 100%;
+    height: 95%;
+}
 #play {
     width: 75px;
 }
