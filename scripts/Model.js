@@ -42,7 +42,7 @@ class Greg extends Player {
 // Ghosts
 class Python extends Player {
   constructor(x, y) {
-    super(x, y, 30, 30);
+    super(x, y, 22, 22);
   }
 }
 class Semicolon extends EventEmitter {
