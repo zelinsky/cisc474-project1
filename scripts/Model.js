@@ -532,7 +532,7 @@ class Model extends EventEmitter {
         this._greg._posX + this._greg._width > python._posX &&
         this._greg._posY < python._posY + python._height &&
         this._greg._posY + this._greg._height > python._posY) {
-         if (true){ // if (this._greg._poweredUp) {
+         if (this._greg._poweredUp){ 
           this.pythonEaten(index);
         } else {
           this.gregEaten();

@@ -30,7 +30,6 @@ class Controller {
   updateModel(values) {
     this._model.moveGreg(values.gregDir);
     this._model.movePythons(values.pythonDir);
-
     this._model.checkCollision();
   }
   

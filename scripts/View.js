@@ -80,7 +80,7 @@ class View extends EventEmitter {
 	gameOver(winner) {
 		if (winner === "greg") {
 			console.log("Greg wins!");
-     $("#maze").append(`<div id="end" class="endScreen" style="left:${0}px;top:5%"></div>`);
+    	 $("#maze").append(`<div id="end" class="endScreen" style="left:${0}px;top:5%"></div>`);
 		} else if (winner === "pythons") {
 			console.log("Pythons winnnnn!");
 		}
@@ -89,6 +89,7 @@ class View extends EventEmitter {
 	// TODO:
 	// Remove one life from display
 	loseLife() {
+		this._model._greg.lives--;
 	}
 
 	// TODO:
@@ -122,17 +123,23 @@ class View extends EventEmitter {
 	}
   
 	renderLives(numLives){
-		let livesContainer = document.getElementById('lives'); 
+		let livesContainer = document.getElementById('lives');
+		//livesContainer.style.left=livesContainer.style.left+500;
+		//livesContainer.style.position = absolute;
 		let livesText = document.createElement('span'); 
+		livesText.style.top = livesText.style.top + 300;
 		livesText.innerText = 'Lives'; 
 		livesText.setAttribute('class', 'badge badge-secondary'); 
+		livesContainer.style.margin = 100;
 		livesContainer.appendChild(livesText); 
-		/*for (let i = 0; i < numLives; i++) {
+		for (let i = 0; i < 1/*numLives*/; i++) {
 			let span = document.createElement('span'); 
-			span.setAttribute('class', 'greg');
-			let rect = span.getBoundingClientRect();  
+			span.setAttribute('class', 'relativeGregImage');
+			//let rect = span.getBoundingClientRect();
+			//span.style.left=span.style.left+(30*i); 
 			livesContainer.appendChild(span); 
-		} */ 
+			span.style.width = 100;
+		} 
 	}
 	makeScore(score){
 		let scoreContainer = document.getElementById('score'); 

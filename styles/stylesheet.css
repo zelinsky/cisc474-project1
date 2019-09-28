@@ -12,7 +12,21 @@ body {
     height: 30px;
     display: inline-block;
 }
+/*
+span {
+    margin: -10px;
+}*/
 
+.relativeGregImage {
+    position: relative;
+    content:url("../images/greg.png");
+    width: 30px;
+    height: 30px;
+    top:2px;
+    
+}
+
+#lives{position:relative;}
 #greg {
     left: 413px;
     top: 374px;
