@@ -33,7 +33,7 @@ class Player {
 // Pacman
 class Greg extends Player {
   constructor(x, y) {
-    super(x, y, 35, 35);
+    super(x, y, 28, 28);
     this._lives = 3;
     this._poweredUp = false;
   }
@@ -68,8 +68,6 @@ class Model extends EventEmitter {
     this._pelletData = new PelletData();
     this._greg = new Greg(this._maze.NodeList[48].x - this._maze.OFFSET, 
                           this._maze.NodeList[48].y - this._maze.OFFSET);
-    //console.log(this._maze.NodeList[48].x - 20);
-    //console.log(this._maze.NodeList[48].y - 20);
     this._score = 0;
     this._pythons = [];
     let pythonStart = [0, 6, 119, 126];
@@ -77,8 +75,6 @@ class Model extends EventEmitter {
     for (let i = 0; i < 4; i++) {
       this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - this._maze.OFFSET, 
                                     this._maze.NodeList[pythonStart[i]].y - this._maze.OFFSET));
-      //console.log(this._maze.NodeList[pythonStart[i]].x - 20);
-      //console.log(this._maze.NodeList[pythonStart[i]].y - 20);
     }
     
     this._semicolons = [];
@@ -169,11 +165,9 @@ class Model extends EventEmitter {
   shiftSnap(shiftData, mover) {
     if (shiftData.x == 0) {
       shiftData.x = shiftData.node.x - this._maze.OFFSET - mover._posX;
-      //console.log("Shifted greg over in x by " + shift.x + " using nodeX:" + shift.node.x + ", offset:", + this._maze.OFFSET + ", gregX: " + this._greg._posX);
     }
     if (shiftData.y == 0) {
       shiftData.y = shiftData.node.y - this._maze.OFFSET - mover._posY;
-      //console.log("Shifted greg over in y by " + shift.y + " using nodeY:" + shift.node.y + ", offset:", + this._maze.OFFSET + ", gregY: " + this._greg._posY);
     }
     return shiftData;
   }
@@ -208,7 +202,7 @@ class Model extends EventEmitter {
     this.emit("loseLife");
     if (--this._greg._lives === 0) { // Decrease life, if 0 lives left, game ends
       this.emit("gameOver", "pythons");
-    } else { // Place sprites back to original positions
+    } else { // Place sprite back to original position
 
     }
   }
@@ -224,14 +218,27 @@ class Model extends EventEmitter {
   }
 
   semicolonEaten(semicolon, index) {
-    this._score += 10;
-    this.emit("updateScore", this._score);
     this._semicolonsEaten++;
     if (this._semicolonsEaten == this._numberOfSemicolons){
       this.emit("gameOver", "greg");
     }
     semicolon._visible = false;
     this.emit("eatSemicolon", index);
+    if (true) { // if (regular semicolon)
+      this._score += 10;
+      this.emit("updateScore", this._score);
+    } else { // if (power UP semicolon)
+        this._score += 50;
+        this.emit("updateScore", this._score);
+        this._poweredUp = true;
+        // change pictures for pythons to scared
+        setTimeout(powerDown, 7000);
+    }
+  }
+
+  powerDown() {
+    this._poweredUp = false;
+    // change pictures for pythons to regular
   }
 
   checkCollision() {
@@ -243,7 +250,7 @@ class Model extends EventEmitter {
          if (this._greg._poweredUp) {
           this.pythonEaten(index);
         } else {
-          this.gregEaten();
+           this.gregEaten();
         }
       }
     });
@@ -256,8 +263,4 @@ class Model extends EventEmitter {
         } 
   });
   }
-
-
-  
-
 }
