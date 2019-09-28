@@ -26,6 +26,7 @@
 <body>
 
     <div id="maze">
+
         <div id="greg" class="greg"></div>
         <div class="python" id="python0"></div>
         <div class="python" id="python1"></div>
@@ -40,6 +41,16 @@
             <span id="score"></span>
         </div>
     </div>
+
+    <div id="endContainer" class="container-fluid">
+    <div id="winnerEndScreen" class="endImage hidden"></div>
+    <div id="endScreen" class="endImage hidden"></div>
+    <button class="btn btn-primary hidden" id="restart">Play Again</button>
+    </div>
+
+
+
+
     <script>
         $(document).ready(() => {
             const model = new Model(),

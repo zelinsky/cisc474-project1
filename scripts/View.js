@@ -82,17 +82,18 @@ class View extends EventEmitter {
 	// Press 'r' to play again
 	gameOver(winner) {
 		this.gamePause();
-		$("#play").text("Play Again")
-		$("#play").click(() => {
+		$("#status").addClass("hidden");
+		$("#restart").click(() => {
 			location.reload();
 		});
 		if (winner === "greg") {
 			console.log("Greg wins!");
-			$("#maze").append(`<div id="end" class="winnerEndScreen"></div>`);
+			$("#winnerEndScreen").removeClass("hidden");
 		} else if (winner === "pythons") {
 			console.log("Pythons winnnnn!");
-			$("#maze").append(`<div id="end" class="endScreen"></div>`);
+			$("#endScreen").removeClass("hidden");
 		}
+		$("#restart").removeClass("hidden");
 	}
 
 	// TODO:
