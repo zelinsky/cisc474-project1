@@ -46,13 +46,14 @@ class Python extends Player {
   }
 }
 class Semicolon extends EventEmitter {
-  constructor(x, y, id) {
+  constructor(x, y, pu) {
     super();
     this._posX = x;
     this._posY = y;
     this._width = 3;
     this._height = 13;
     this._visible = true;
+    this._powerUp = pu-1;
   }
 }
 
@@ -86,7 +87,8 @@ class Model extends EventEmitter {
       for (let j = 0; j < this._pelletData._xCoords.length; j++) {
         if (this._pelletData._pelletMap[i][j]) {
           this._semicolons.push(new Semicolon(this._pelletData._xCoords[j] - this._pelletData.X_PELLET_OFFSET, 
-                                              this._pelletData._yCoords[i] - this._pelletData.Y_PELLET_OFFSET));
+                                              this._pelletData._yCoords[i] - this._pelletData.Y_PELLET_OFFSET,
+                                              this._pelletData._pelletMap[i][j]));
         }
       }
     }

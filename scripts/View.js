@@ -81,14 +81,17 @@ class View extends EventEmitter {
 	// Display winner
 	// Press 'r' to play again
 	gameOver(winner) {
+		this.gamePause();
 		$("#play").text("Play Again")
-		this._gameState = "end";
+		$("#play").click(() => {
+			location.reload();
+		});
 		if (winner === "greg") {
 			console.log("Greg wins!");
-			$("#maze").append(`<div id="end" class="winnerEndScreen" style="left:${0}px;top:5%"></div>`);
+			$("#maze").append(`<div id="end" class="winnerEndScreen"></div>`);
 		} else if (winner === "pythons") {
 			console.log("Pythons winnnnn!");
-			$("#maze").append(`<div id="end" class="endScreen" style="left:${0}px;top:5%"></div>`);
+			$("#maze").append(`<div id="end" class="endScreen"></div>`);
 		}
 	}
 
@@ -102,6 +105,9 @@ class View extends EventEmitter {
 	drawSemicolons(semicolons) {
 		semicolons.forEach((semicolon, index) => {
 			$("#maze").append(`<div id="sc${index}" class="semicolon" style="left:${semicolon._posX}px;top:${semicolon._posY}px"></div>`);
+			if (semicolon._powerUp) {
+				$(`#sc${index}`).addClass("powerUp");
+			}
 		});
 	}
 

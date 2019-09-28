@@ -24,6 +24,7 @@ body {
 #greg {
     left: 413px;
     top: 374px;
+    z-index: 2;
 }
 
 .python {
@@ -31,6 +32,7 @@ body {
     content:url("../images/python.png");
     width: 30px;
     height: 30px;
+    z-index: 2;
 }
 
 /* .maze{
@@ -74,21 +76,37 @@ body {
     content:url("../images/pellet.png");
     width: 4px;
     height: 13px;
+    z-index: 1;
+}
+
+.powerUp {
+    background: rgba(218, 5, 5, 0.82);
+    overflow: hidden;
+    z-index: 1;
+}
+
+#end {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
 }
 
 .endScreen {
-    position: absolute;
     content:url("../images/endScreen.png");
-    width: 100%;
-    height: 95%;
 }
 
 .winnerEndScreen {
     position: absolute;
     content:url("../images/WinnerEndScreen.png");
-    width: 100%;
-    height: 95%;
+
 }
 #play {
-    width: 75px;
+    width: 90px;
+}
+
+#status {
+    z-index: 5;
 }
