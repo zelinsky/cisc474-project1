@@ -33,7 +33,7 @@ class Player {
 // Pacman
 class Greg extends Player {
   constructor(x, y) {
-    super(x, y, 35, 40);
+    super(x, y, 35, 35);
     this._lives = 3;
     this._poweredUp = false;
   }
@@ -91,16 +91,7 @@ class Model extends EventEmitter {
       }
     }
     this._numberOfSemicolons = this._semicolons.length;
-    //this.emit("gregMoved", this._greg.move(0, 0));
-    //this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
   }
-  
-
-  /*moveGreg(x, y) {
-    let newPos = this._greg.move(x, y);
-    this.emit("gregMoved", newPos);
-    this.emit("debugLightChanged", this._maze.nodeCollide(newPos.x, newPos.y));
-  }*/
 
   movePlayer(player, dir) {
     var actualX = 0;
@@ -137,20 +128,14 @@ class Model extends EventEmitter {
       if (!this._maze.dirClear(player.getPos.x, player.getPos.y, dir)) {
         if (!this._maze.dirClear(player.getPos.x, player.getPos.y, player._dir)) {
           if (!this._maze.dirClear(player.getPos.x, player.getPos.y, player._lastPress)) {
-            //console.log("C1 [Input: " + dir + ", Current: " + player._dir + ", LastPress: " + player._lastPress + "] DECISION: stop");
             player._dir = "stop";   // case for the last key, current dir, and input are blocked
           } else {
-            //console.log("C2 [Input: " + dir + ", Current: " + player._dir + ", LastPress: " + player._lastPress + "] DECISION: " + player._lastPress);
             player._dir = player._lastPress;  // case for the current dir and input are blocked but the last key is good
           }
         } else {
-          //console.log("C3 [Input: " + dir + ", Current: " + player._dir + ", LastPress: " + player._lastPress + "] DECISION: " + player._dir);
           player._lastPress = dir; // case for if the input is blocked but current is good
         }
       } else {
-        //console.log("Input looks clear, going to node " + this._maze.dirClear(player.getPos.x, player.getPos.y, dir).id
-        //            + ", Input: " + dir + ", X: " + player.getPos.x + ", Y: " + player.getPos.y);
-        //console.log("C4 [Input: " + dir + ", Current: " + player._dir + ", LastPress: " + player._lastPress + "] DECISION: " + dir);
         player._dir = dir;   // case for if the input dir is unblocked
       }
     }
@@ -200,7 +185,6 @@ class Model extends EventEmitter {
       shift = this.shiftSnap(shift, this._greg);
     }
     this.emit("gregMoved", this._greg.move(shift.x, shift.y));
-    //this.emit("debugLightChanged", this._maze.nodeCollide(this._greg.getPos.x, this._greg.getPos.y));
   }
 
   movePythons(dir) {
@@ -228,6 +212,7 @@ class Model extends EventEmitter {
 
     }
   }
+
   pythonEaten(index) {
     /*once the powerup is working this line will be:
      this._score += pythonsEatenSincePoweredUp * 200        */
@@ -236,6 +221,17 @@ class Model extends EventEmitter {
     this._pythons[index]._posX = this._maze.NodeList[48].x -this._maze.OFFSET;
     this._pythons[index]._posY = this._maze.NodeList[48].y -this._maze.OFFSET;
     this.emit("eatPython", index);
+  }
+
+  semicolonEaten(semicolon, index) {
+    this._score += 10;
+    this.emit("updateScore", this._score);
+    this._semicolonsEaten++;
+    if (this._semicolonsEaten == this._numberOfSemicolons){
+      this.emit("gameOver", "greg");
+    }
+    semicolon._visible = false;
+    this.emit("eatSemicolon", index);
   }
 
   checkCollision() {
@@ -255,16 +251,8 @@ class Model extends EventEmitter {
       if (this._greg._posX < semicolon._posX + semicolon._width &&
         this._greg._posX + this._greg._width > semicolon._posX &&
         this._greg._posY < semicolon._posY + semicolon._height &&
-        this._greg._posY + this._greg._height > semicolon._posY && semicolon._visible)
-        {
-          this._score += 10;
-          this.emit("updateScore", this._score);
-          this._semicolonsEaten++;
-          if (this._semicolonsEaten == this._numberOfSemicolons){
-            this.emit("gameOver", "greg");
-          }
-          semicolon._visible = false;
-          this.emit("eatSemicolon", index);
+        this._greg._posY + this._greg._height > semicolon._posY && semicolon._visible) {
+          this.semicolonEaten(semicolon, index);
         } 
   });
   }
