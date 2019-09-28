@@ -226,21 +226,18 @@ class Model extends EventEmitter {
     }
     semicolon._visible = false;
     this.emit("eatSemicolon", index);
-    if (true) { // if (regular semicolon)
+    if (!semicolon._powerUp) {
       this._score += 10;
-      this.emit("updateScore", this._score);
-    } else { // if (power UP semicolon)
+    } else {
+        this.emit("changePower",true);
         this._score += 50;
-        this.emit("updateScore", this._score);
-        this._poweredUp = true;
-        // change pictures for pythons to scared
-        setTimeout(powerDown, 7000);
+        this._greg._poweredUp = true;
+        setTimeout(() => {
+          this._greg._poweredUp = false;
+          this.emit("changePower", false);
+        }, 3000);
     }
-  }
-
-  powerDown() {
-    this._poweredUp = false;
-    // change pictures for pythons to regular
+    this.emit("updateScore", this._score);
   }
 
   checkCollision() {

@@ -16,6 +16,7 @@ class View extends EventEmitter {
 		model.on("eatSemicolon", semicolonId => this.removeSemicolon(semicolonId)).on("loseLife", () => this.loseLife()).on("gameOver", winner => this.gameOver(winner));
 		model.on("eatPython",  pythonID =>this.removePython(pythonID));
 		model.on("updateScore",  score =>this.updateScore(score));
+		model.on("changePower", up=>this.changePower(up));
 		$(document).keydown(evt => {
 			if (this._gameState == "start") {
 				switch (evt.which) {
@@ -101,8 +102,14 @@ class View extends EventEmitter {
 	loseLife() {
 	}
 
-	// TODO:
-	// Draw pellets
+	changePower(up) {
+		if (up) {
+			$(".python").removeClass("python").addClass("scaredPython");
+		} else {
+			$(".scaredPython").removeClass("scaredPython").addClass("python");
+		}
+	}
+
 	drawSemicolons(semicolons) {
 		semicolons.forEach((semicolon, index) => {
 			$("#maze").append(`<div id="sc${index}" class="semicolon" style="left:${semicolon._posX}px;top:${semicolon._posY}px"></div>`);
@@ -112,8 +119,6 @@ class View extends EventEmitter {
 		});
 	}
 
-	// TODO:
-	// Remove semicolon from display
 	removeSemicolon(semicolonId) {
 		$(`#sc${semicolonId}`).hide();
 	}
