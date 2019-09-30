@@ -45,15 +45,24 @@ class Python extends Player {
     super(x, y, 22, 22);
   }
 }
+
 class Semicolon extends EventEmitter {
   constructor(x, y, pu) {
     super();
-    this._posX = x;
-    this._posY = y;
-    this._width = 3;
-    this._height = 13;
     this._visible = true;
-    this._powerUp = pu-1;
+    if (pu === 2) {
+      this._posX = x-4;
+      this._posY = y-2;
+      this._width = 14;
+      this._height = 19;
+      this._powerUp = true;
+    } else {
+      this._posX = x;
+      this._posY = y;
+      this._width = 3;
+      this._height = 13;
+      this._powerUp = false;
+    }
   }
 }
 
@@ -67,24 +76,24 @@ class Model extends EventEmitter {
     this._speed = 10;
     this._maze = new MazeNodes(this._speed);
     this._pelletData = new PelletData();
-    this._greg = new Greg(this._maze.NodeList[48].x - this._maze.OFFSET, 
-                          this._maze.NodeList[48].y - this._maze.OFFSET);
+    this._greg = new Greg(this._maze.NodeList[48].x - this._maze.OFFSET,
+      this._maze.NodeList[48].y - this._maze.OFFSET);
     this._score = 0;
     this._pythons = [];
     let pythonStart = [0, 6, 119, 126];
     this._semicolonsEaten = 0;
     for (let i = 0; i < 4; i++) {
-      this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - this._maze.OFFSET, 
-                                    this._maze.NodeList[pythonStart[i]].y - this._maze.OFFSET));
+      this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - this._maze.OFFSET,
+        this._maze.NodeList[pythonStart[i]].y - this._maze.OFFSET));
     }
-    
+
     this._semicolons = [];
     for (let i = 0; i < this._pelletData._yCoords.length; i++) {
       for (let j = 0; j < this._pelletData._xCoords.length; j++) {
         if (this._pelletData._pelletMap[i][j]) {
-          this._semicolons.push(new Semicolon(this._pelletData._xCoords[j] - this._pelletData.X_PELLET_OFFSET, 
-                                              this._pelletData._yCoords[i] - this._pelletData.Y_PELLET_OFFSET,
-                                              this._pelletData._pelletMap[i][j]));
+          this._semicolons.push(new Semicolon(this._pelletData._xCoords[j] - this._pelletData.X_PELLET_OFFSET,
+            this._pelletData._yCoords[i] - this._pelletData.Y_PELLET_OFFSET,
+            this._pelletData._pelletMap[i][j]));
         }
       }
     }
@@ -161,7 +170,7 @@ class Model extends EventEmitter {
         player._lastPress = "";
     }
 
-    return {x: actualX, y: actualY, node: node};
+    return { x: actualX, y: actualY, node: node };
   }
 
   shiftSnap(shiftData, mover) {
@@ -199,8 +208,8 @@ class Model extends EventEmitter {
   // TODO:
   // Place sprites back to starting positions (if Greg still has lives left)
   gregEaten() {
-    this._greg._posX = this._maze.NodeList[48].x -this._maze.OFFSET;
-    this._greg._posY = this._maze.NodeList[48].y -this._maze.OFFSET;
+    this._greg._posX = this._maze.NodeList[48].x - this._maze.OFFSET;
+    this._greg._posY = this._maze.NodeList[48].y - this._maze.OFFSET;
     this.emit("loseLife");
     if (--this._greg._lives === 0) { // Decrease life, if 0 lives left, game ends
       this.emit("gameOver", "pythons");
@@ -212,16 +221,16 @@ class Model extends EventEmitter {
   pythonEaten(index) {
     /*once the powerup is working this line will be:
      this._score += pythonsEatenSincePoweredUp * 200        */
-    this._score += 100; 
+    this._score += 100;
     this.emit("updateScore", this._score);
-    this._pythons[index]._posX = this._maze.NodeList[48].x -this._maze.OFFSET;
-    this._pythons[index]._posY = this._maze.NodeList[48].y -this._maze.OFFSET;
+    this._pythons[index]._posX = this._maze.NodeList[48].x - this._maze.OFFSET;
+    this._pythons[index]._posY = this._maze.NodeList[48].y - this._maze.OFFSET;
     this.emit("eatPython", index);
   }
 
   semicolonEaten(semicolon, index) {
     this._semicolonsEaten++;
-    if (this._semicolonsEaten == this._numberOfSemicolons){
+    if (this._semicolonsEaten == this._numberOfSemicolons) {
       this.emit("gameOver", "greg");
     }
     semicolon._visible = false;
@@ -229,27 +238,27 @@ class Model extends EventEmitter {
     if (!semicolon._powerUp) {
       this._score += 10;
     } else {
-        this.emit("changePower",true);
-        this._score += 50;
-        this._greg._poweredUp = true;
-        setTimeout(() => {
-          this._greg._poweredUp = false;
-          this.emit("changePower", false);
-        }, 3000);
+      this.emit("changePower", true);
+      this._score += 50;
+      this._greg._poweredUp = true;
+      setTimeout(() => {
+        this._greg._poweredUp = false;
+        this.emit("changePower", false);
+      }, 7000);
     }
     this.emit("updateScore", this._score);
   }
 
   checkCollision() {
-    this._pythons.forEach((python,index) => {
+    this._pythons.forEach((python, index) => {
       if (this._greg._posX < python._posX + python._width &&
         this._greg._posX + this._greg._width > python._posX &&
         this._greg._posY < python._posY + python._height &&
         this._greg._posY + this._greg._height > python._posY) {
-         if (this._greg._poweredUp) {
+        if (this._greg._poweredUp) {
           this.pythonEaten(index);
         } else {
-           this.gregEaten();
+          this.gregEaten();
         }
       }
     });
@@ -258,8 +267,8 @@ class Model extends EventEmitter {
         this._greg._posX + this._greg._width > semicolon._posX &&
         this._greg._posY < semicolon._posY + semicolon._height &&
         this._greg._posY + this._greg._height > semicolon._posY && semicolon._visible) {
-          this.semicolonEaten(semicolon, index);
-        } 
-  });
+        this.semicolonEaten(semicolon, index);
+      }
+    });
   }
 }

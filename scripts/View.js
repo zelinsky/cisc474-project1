@@ -112,9 +112,10 @@ class View extends EventEmitter {
 
 	drawSemicolons(semicolons) {
 		semicolons.forEach((semicolon, index) => {
-			$("#maze").append(`<div id="sc${index}" class="semicolon" style="left:${semicolon._posX}px;top:${semicolon._posY}px"></div>`);
 			if (semicolon._powerUp) {
-				$(`#sc${index}`).addClass("powerUp");
+				$("#maze").append(`<div id="sc${index}" class="powerUp" style="left:${semicolon._posX}px;top:${semicolon._posY}px"></div>`);
+			} else {
+				$("#maze").append(`<div id="sc${index}" class="semicolon" style="left:${semicolon._posX}px;top:${semicolon._posY}px"></div>`);
 			}
 		});
 	}

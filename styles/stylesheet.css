@@ -87,8 +87,10 @@ body {
 }
 
 .powerUp {
-    background: rgba(218, 5, 5, 0.82);
-    overflow: hidden;
+    position: absolute;
+    content:url("../images/powerup.png");
+    width: 15px;
+    height: 20px;
     z-index: 1;
 }
 
