@@ -80,11 +80,11 @@ class Model extends EventEmitter {
       this._maze.NodeList[48].y - this._maze.OFFSET);
     this._score = 0;
     this._pythons = [];
-    let pythonStart = [0, 6, 119, 126];
+    this._pythonStartPos = [0, 6, 119, 126];
     this._semicolonsEaten = 0;
     for (let i = 0; i < 4; i++) {
-      this._pythons.push(new Python(this._maze.NodeList[pythonStart[i]].x - this._maze.OFFSET,
-        this._maze.NodeList[pythonStart[i]].y - this._maze.OFFSET));
+      this._pythons.push(new Python(this._maze.NodeList[this._pythonStartPos[i]].x - this._maze.OFFSET,
+        this._maze.NodeList[this._pythonStartPos[i]].y - this._maze.OFFSET));
     }
 
     this._semicolons = [];
@@ -210,6 +210,10 @@ class Model extends EventEmitter {
   gregEaten() {
     this._greg._posX = this._maze.NodeList[48].x - this._maze.OFFSET;
     this._greg._posY = this._maze.NodeList[48].y - this._maze.OFFSET;
+    for (let i = 0; i < 4; i++) {
+      this._pythons[i]._posX = this._maze.NodeList[this._pythonStartPos[i]].x - this._maze.OFFSET;
+      this._pythons[i]._posY = this._maze.NodeList[this._pythonStartPos[i]].y - this._maze.OFFSET;
+    }
     this.emit("loseLife");
     if (--this._greg._lives === 0) { // Decrease life, if 0 lives left, game ends
       this.emit("gameOver", "pythons");
