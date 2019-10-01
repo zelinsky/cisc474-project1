@@ -149,3 +149,9 @@ body {
     -khtml-transform: scale(-1, 1);
     -ms-transform: scale(-1, 1);
 }
+
+#status {
+    position: absolute;
+    top: 10px;
+    left: 880px;
+}
