@@ -192,11 +192,11 @@ class Model extends EventEmitter {
     this.emit("gregMoved", this._greg.move(shift.x, shift.y));
   }
 
-  movePythons(dir) {
+  movePythons(dirList) {
     var shift;
     let newPosList = []
-    this._pythons.forEach(python => {
-      shift = this.movePlayer(python, dir);
+    this._pythons.forEach((python, index) => {
+      shift = this.movePlayer(python, dirList[index]);
       if (shift.node) {
         shift = this.shiftSnap(shift, python);
       }

@@ -35,16 +35,16 @@ class View extends EventEmitter {
 						this._gameValues.gregDir = "down";
 						break;
 					case 65: // a
-						this._gameValues.pythonDir = "left";
+						this._gameValues.pythonDir = ["left", "left", "left", "left"];
 						break;
 					case 87: // w
-						this._gameValues.pythonDir = "up";
+						this._gameValues.pythonDir = ["up", "up", "up", "up"];
 						break;
 					case 68: // d
-						this._gameValues.pythonDir = "right";
+						this._gameValues.pythonDir = ["right", "right", "right", "right"];
 						break;
 					case 83: // s
-						this._gameValues.pythonDir = "down";
+						this._gameValues.pythonDir = ["down", "down", "down", "down"];
 						break;
 					case 27: // esc
 							clearInterval(this._gameLoop);
@@ -65,7 +65,7 @@ class View extends EventEmitter {
 
 		this._gameValues = {
 			gregDir: "up",
-			pythonDir: "up"
+			pythonDir: ["up", "up", "up", "up"]
 		};
 		this.drawSemicolons(this._model._semicolons);
 	}
@@ -127,7 +127,6 @@ class View extends EventEmitter {
 	}
 	
 	removePython(pythonId) {
-		console.log(pythonId);
 		$(`#python${pythonId}`).hide();
 		$(`#python${pythonId}`).delay(3000).show(0);
 	} 
