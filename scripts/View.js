@@ -22,12 +22,14 @@ class View extends EventEmitter {
 				switch (evt.which) {
 					case 37: // left
 						this._gameValues.gregDir = "left";
+						$(this._elements.greg).removeClass("flipped");
 						break;
 					case 38: // up
 						this._gameValues.gregDir = "up";
 						break;
 					case 39: // right
 						this._gameValues.gregDir = "right";
+						$(this._elements.greg).addClass("flipped");
 						break;
 					case 40: // down
 						this._gameValues.gregDir = "down";
