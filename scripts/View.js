@@ -102,6 +102,7 @@ class View extends EventEmitter {
 	// TODO:
 	// Remove one life from display
 	loseLife() {
+		$(".relativeGreg").last().remove();
 	}
 
 	changePower(up) {
