@@ -129,11 +129,12 @@ body {
 
 #endScreen {
     content:url("../images/endScreen.png");
+    width: 90%;
 }
 
 #winnerEndScreen {
     content:url("../images/WinnerEndScreen.png");
-
+    width: 90%;
 }
 
 #play {
