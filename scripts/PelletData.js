@@ -1,5 +1,5 @@
 class PelletData {
-    constructor() {
+    constructor(xOff) {
         this.X_PELLET_OFFSET = 4;
         this.Y_PELLET_OFFSET = 7;
         this._xCoords = [54, 88, 121, 158, 191, 224, 260, 294, 330, 364, 396, 433, 466, 502, 538, 571, 606, 640, 675, 709, 745, 779, 813]; // 23 values
@@ -30,5 +30,9 @@ class PelletData {
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1],
             [2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 2]];
+
+            for(let i = 0; i < this._xCoords.length; i++) {
+                this._xCoords[i] = this._xCoords[i] + xOff;
+            }
     }
 }

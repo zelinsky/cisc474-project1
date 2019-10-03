@@ -1,5 +1,5 @@
 class MazeNodes {
-    constructor(speed) {
+    constructor(speed, xOff) {
         this.NODE_BOUND = speed - 2;
         this.OFFSET = 17;
         this.NodeList = [
@@ -130,6 +130,10 @@ class MazeNodes {
             { 'adjacency': [115, 123], 'id': 124, 'x': 675, 'y': 802 },
             { 'adjacency': [117, 126], 'id': 125, 'x': 745, 'y': 802 },
             { 'adjacency': [125, 118], 'id': 126, 'x': 813, 'y': 802 }];
+
+            this.NodeList.forEach(node => {
+                node.x = node.x + xOff;
+            });
     }
 
     getNode(i) {

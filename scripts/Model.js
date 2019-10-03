@@ -75,8 +75,11 @@ class Model extends EventEmitter {
   constructor() {
     super();
     this._speed = 10;
-    this._maze = new MazeNodes(this._speed);
-    this._pelletData = new PelletData();
+    let screenWidth = $(window).width();
+    let imageWidth = 854;
+    let xOff = Math.floor((screenWidth / 2) - (imageWidth / 2)) - 5;
+    this._maze = new MazeNodes(this._speed, xOff);
+    this._pelletData = new PelletData(xOff-5);
     this._greg = new Greg(this._maze.NodeList[48].x - this._maze.OFFSET,
       this._maze.NodeList[48].y - this._maze.OFFSET, this._speed);
     this._score = 0;
