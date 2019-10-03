@@ -86,7 +86,7 @@ class Model extends EventEmitter {
       this._pythons.push(new Python(this._maze.NodeList[this._pythonStartPos[i]].x - this._maze.OFFSET,
         this._maze.NodeList[this._pythonStartPos[i]].y - this._maze.OFFSET));
     }
-
+    
     this._semicolons = [];
     for (let i = 0; i < this._pelletData._yCoords.length; i++) {
       for (let j = 0; j < this._pelletData._xCoords.length; j++) {
@@ -192,19 +192,78 @@ class Model extends EventEmitter {
     this.emit("gregMoved", this._greg.move(shift.x, shift.y));
   }
 
-  movePythons(dirList) {
+  movePythonsAI(dirList) {
     var shift;
     let newPosList = []
     this._pythons.forEach((python, index) => {
-      shift = this.movePlayer(python, dirList[index]);
+      
+      if (this._maze.nodeCollide(python._posX, python._posY)){
+        let node = this._maze.collidingNode(python._posX, python._posY); 
+        let adjacent_nodes = node.adjacency;
+        let min = -42; 
+        if (!this._greg._poweredUp){
+          min = Number.MAX_VALUE; 
+        } 
+        else{ 
+          min = Number.MIN_VALUE; 
+        }
+        let adj = null; 
+        for (let i = 0; i < adjacent_nodes.length; i++){
+          let curr = this._maze.NodeList[adjacent_nodes[i]]; 
+          let dist = Math.sqrt(Math.pow((curr.x - this._greg._posX), 2) + Math.pow((curr.y - this._greg._posY), 2) ); 
+          if (!this._greg._poweredUp && dist < min){
+            adj = curr; 
+            min = dist; 
+          }
+          if (this._greg._poweredUp && dist > min){
+            adj = curr; 
+            min = dist; 
+          }
+        } // get first adjacent node in list (could be random) 
+        if (Math.abs(python._posX - adj.x) < Math.abs(adj.y - python._posY)){
+           console.log("should go down"); 
+           if (python._posY < adj.y){
+             python._dir = "down"; 
+           }
+           else{
+             python._dir = "up"; 
+           }
+        }
+        else{
+          if (python._posX < adj.x){
+            python._dir = "right"; 
+          }
+          else{ 
+            python._dir = "left";
+          }
+        }
+      }
+      
+      shift = this.movePlayer(python, python._dir);
       if (shift.node) {
         shift = this.shiftSnap(shift, python);
       }
+      
       newPosList.push(python.move(shift.x, shift.y));
     });
     this.emit("pythonsMoved", newPosList);
   }
-
+  movePythonsMulti(dirList) {
+    var shift;
+    let newPosList = []
+    this._pythons.forEach((python, index) => {
+      
+      
+      
+      shift = this.movePlayer(python, dirList[index]);
+      if (shift.node) {
+        shift = this.shiftSnap(shift, python);
+      }
+      
+      newPosList.push(python.move(shift.x, shift.y));
+    });
+    this.emit("pythonsMoved", newPosList);
+  }
   // TODO:
   // Place sprites back to starting positions (if Greg still has lives left)
   gregEaten() {

@@ -1,10 +1,14 @@
-body {
+.game{
     background-color: black;
     background-image: url("../images/gregman-maze.png");
     background-repeat: no-repeat;
     background-position: left top;
 }
-
+.open{
+    background-color: black; 
+    color: #00ff00; 
+    font-family: "Consolas"; 
+}
 .greg {
     position: absolute;
     content:url("../images/greg.png");

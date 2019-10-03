@@ -24,45 +24,72 @@
 </head>
 
 <body>
+    <div id="game">
+        <div id="maze">
 
-    <div id="maze">
-
-        <div id="greg" class="greg"></div>
-        <div class="python" id="python0"></div>
-        <div class="python" id="python1"></div>
-        <div class="python" id="python2"></div>
-        <div class="python" id="python3"></div>
+            <div id="greg" class="greg"></div>
+            <div class="python" id="python0"></div>
+            <div class="python" id="python1"></div>
+            <div class="python" id="python2"></div>
+            <div class="python" id="python3"></div>
         <!--<div id="debug_light"></div>-->
-    </div>
-    <div id="status" class="container">
-        <div class="row">
-            <div class="col-lg-1">
-            <button class="btn btn-primary" id="play">Play</button>
-            <span id="lives"></span>
-            <span id="score"></span>
+        </div>
+        <div id="status" class="container">
+            <div class="row">
+                <div class="col-lg-1">
+                <button class="btn btn-primary" id="play">Play</button>
+                <span id="lives"></span>
+                <span id="score"></span>
+                </div>
+                <div class="clearfix"></div>
             </div>
-            <div class="clearfix"></div>
+        </div>
+
+        <div id="endContainer" class="container-fluid">
+        <div id="winnerEndScreen" class="endImage hidden"></div>
+        <div id="endScreen" class="endImage hidden"></div>
+        <button class="btn btn-primary hidden" id="restart">Play Again</button>
         </div>
     </div>
-
-    <div id="endContainer" class="container-fluid">
-    <div id="winnerEndScreen" class="endImage hidden"></div>
-    <div id="endScreen" class="endImage hidden"></div>
-    <button class="btn btn-primary hidden" id="restart">Play Again</button>
+    <div id="opening">
+        <p>
+            silber@someCrappyWindowsMachine:~/usr/bin# ls
+        </p>
+        <button id="start">Play with AI</button>
+        <button id="multi">Play with Friends</button>
     </div>
-
-
 
 
     <script>
         $(document).ready(() => {
-            const model = new Model(),
+            document.getElementById('game').style.visibility='hidden'; 
+            document.getElementById('opening').style.visibility='visible'; 
+            document.querySelector("body").setAttribute("class", "open"); 
+        });
+        document.getElementById('start').addEventListener('click', function(){
+            var model = new Model(),
                 view = new View(model, {
                     "greg": document.getElementById("greg"),
                     "pythons": [document.getElementById("python0"), document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3")]
                 });
+            model.movePythons = model.movePythonsAI; 
             controller = new Controller(model, view);
-        });
+            document.getElementById('game').style.visibility = "visible"; 
+            document.getElementById('opening').style.visibility = "hidden"; 
+            document.querySelector('body').setAttribute("class", "game"); 
+        }); 
+        document.getElementById("multi").addEventListener('click', function(){
+            var model = new Model(),
+                view = new View(model, {
+                    "greg": document.getElementById("greg"),
+                    "pythons": [document.getElementById("python0"), document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3")]
+                });
+            model.movePythons = model.movePythonsMulti; 
+            controller = new Controller(model, view);
+            document.getElementById('game').style.visibility = "visible"; 
+            document.getElementById('opening').style.visibility = "hidden"; 
+            document.querySelector('body').setAttribute("class", "game"); 
+        }); 
     </script>
 </body>
 
