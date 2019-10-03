@@ -304,9 +304,15 @@ class Model extends EventEmitter {
       this.emit("changePower", true);
       this._score += 50;
       this._greg._poweredUp = true;
+      this._pythons.forEach(python => {
+        python._speed = 5;
+      });
       setTimeout(() => {
         this._greg._poweredUp = false;
         this.emit("changePower", false);
+        this._pythons.forEach(python => {
+          python._speed = 10;
+        });
       }, 7000);
     }
     this.emit("updateScore", this._score);
