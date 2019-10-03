@@ -1,12 +1,13 @@
 // A Plyer is an object that has a postion and can move
 class Player {
-  constructor(x, y, w, h) {
+  constructor(x, y, w, h, s) {
     this._posX = x;
     this._posY = y;
     this._dir = "";
     this._lastPress = "";
     this._width = w;
     this._height = h;
+    this._speed = s;
   }
 
   get getPos() {
@@ -32,8 +33,8 @@ class Player {
 
 // Pacman
 class Greg extends Player {
-  constructor(x, y) {
-    super(x, y, 28, 28);
+  constructor(x, y, s) {
+    super(x, y, 28, 28, s);
     this._lives = 3;
     this._poweredUp = false;
   }
@@ -41,8 +42,8 @@ class Greg extends Player {
 
 // Ghosts
 class Python extends Player {
-  constructor(x, y) {
-    super(x, y, 22, 22);
+  constructor(x, y, s) {
+    super(x, y, 22, 22, s);
   }
 }
 
@@ -77,14 +78,14 @@ class Model extends EventEmitter {
     this._maze = new MazeNodes(this._speed);
     this._pelletData = new PelletData();
     this._greg = new Greg(this._maze.NodeList[48].x - this._maze.OFFSET,
-      this._maze.NodeList[48].y - this._maze.OFFSET);
+      this._maze.NodeList[48].y - this._maze.OFFSET, this._speed);
     this._score = 0;
     this._pythons = [];
     this._pythonStartPos = [0, 6, 119, 126];
     this._semicolonsEaten = 0;
     for (let i = 0; i < 4; i++) {
       this._pythons.push(new Python(this._maze.NodeList[this._pythonStartPos[i]].x - this._maze.OFFSET,
-        this._maze.NodeList[this._pythonStartPos[i]].y - this._maze.OFFSET));
+        this._maze.NodeList[this._pythonStartPos[i]].y - this._maze.OFFSET, this._speed));
     }
     
     this._semicolons = [];
@@ -149,20 +150,20 @@ class Model extends EventEmitter {
     var node = this._maze.collidingNode(player.getPos.x, player.getPos.y);
     switch (player._dir) {  // handles updates for above branches
       case "left":
-        actualX = -this._speed;
+        actualX = -player._speed;
         actualY = 0;
         break;
       case "up":
         actualX = 0;
-        actualY = -this._speed;
+        actualY = -player._speed;
         break;
       case "right":
-        actualX = this._speed;
+        actualX = player._speed;
         actualY = 0;
         break;
       case "down":
         actualX = 0;
-        actualY = this._speed;
+        actualY = player._speed;
         break;
       default:
         actualX = 0;
@@ -221,7 +222,6 @@ class Model extends EventEmitter {
           }
         } // get first adjacent node in list (could be random) 
         if (Math.abs(python._posX - adj.x) < Math.abs(adj.y - python._posY)){
-           console.log("should go down"); 
            if (python._posY < adj.y){
              python._dir = "down"; 
            }
