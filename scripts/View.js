@@ -18,6 +18,9 @@ class View extends EventEmitter {
 		model.on("updateScore",  score =>this.updateScore(score));
 		model.on("changePower", up=>this.changePower(up));
 		$(document).keydown(evt => {
+			if (evt.which == 27 || evt.which == 80) { // p or esc
+				$("#play").click();
+			}
 			if (this._gameState == "start") {
 				switch (evt.which) {
 					case 37: // left
@@ -45,10 +48,6 @@ class View extends EventEmitter {
 						break;
 					case 83: // s
 						this._gameValues.pythonDir = ["down", "down", "down", "down"];
-						break;
-					case 27: // esc
-							clearInterval(this._gameLoop);
-							this._gameState = "stop";
 						break;
 					default: return; // exit this handler for other keys
 				}
