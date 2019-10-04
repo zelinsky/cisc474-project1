@@ -32,69 +32,74 @@
             <div class="python" id="python1"></div>
             <div class="python" id="python2"></div>
             <div class="python" id="python3"></div>
-        <!--<div id="debug_light"></div>-->
+            <!--<div id="debug_light"></div>-->
         </div>
-        <div id="status" class="container hidden">
+        <div id="status" class="container-fluid">
             <div class="row">
-                <div class="col-lg-1">
                 <button class="btn btn-primary" id="play">Play</button>
+            </div>
+            <div class="row">
                 <span id="lives"></span>
+            </div>
+            <div class="row">
                 <span id="score"></span>
-                </div>
-                <div class="clearfix"></div>
             </div>
         </div>
 
         <div id="endContainer" class="container-fluid">
-        <div id="winnerEndScreen" class="endImage hidden"></div>
-        <div id="endScreen" class="endImage hidden"></div>
-        <button class="btn btn-primary hidden" id="restart">Play Again</button>
+            <div id="winnerEndScreen" class="endImage hidden"></div>
+            <div id="endScreen" class="endImage hidden"></div>
+            <button class="btn btn-primary hidden" id="restart">Play Again</button>
         </div>
     </div>
-    <div id="opening">
-        <p>
-            silber@someCrappyWindowsMachine:~/usr/bin# ls
-        </p>
-        <button id="start">Play with AI</button>
-        <button id="multi">Play with Friends</button>
+
+    <div id="opening" class="container">
+        <div class="panel panel-primary col-md-6">
+                <div class="panel-heading text-center">Select Mode:</div>
+                <div class="panel-body text-center">
+                        <button id="start" class="btn btn-primary">Play with AI</button>
+                        <button id="multi" class="btn btn-primary">Play with Friends</button>
+                </div>
+
+        </div>
     </div>
 
 
     <script>
         $(document).ready(() => {
-            document.getElementById('game').style.visibility='hidden'; 
-            document.getElementById('opening').style.visibility='visible'; 
-            document.querySelector("body").setAttribute("class", "open"); 
+            document.getElementById('game').style.visibility = 'hidden';
+            document.getElementById('opening').style.visibility = 'visible';
+            document.querySelector("body").setAttribute("class", "open");
         });
-        document.getElementById('start').addEventListener('click', function(){
+        document.getElementById('start').addEventListener('click', function () {
             var model = new Model(),
                 view = new View(model, {
                     "greg": document.getElementById("greg"),
                     "pythons": [document.getElementById("python0"), document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3")]
                 });
-            model.movePythons = model.movePythonsAI; 
+            model.movePythons = model.movePythonsAI;
             controller = new Controller(model, view);
-            document.getElementById('game').style.visibility = "visible"; 
-            document.getElementById('opening').style.visibility = "hidden"; 
-            document.querySelector('body').setAttribute("class", "game"); 
+            document.getElementById('game').style.visibility = "visible";
+            document.getElementById('opening').style.visibility = "hidden";
+            document.querySelector('body').setAttribute("class", "game");
             view.moveGreg(model._greg.getPos);
             let pythonPosList = [];
             model._pythons.forEach(python => {
                 pythonPosList.push(python.getPos);
             });
             view.movePythons(pythonPosList);
-        }); 
-        document.getElementById("multi").addEventListener('click', function(){
+        });
+        document.getElementById("multi").addEventListener('click', function () {
             var model = new Model(),
                 view = new View(model, {
                     "greg": document.getElementById("greg"),
                     "pythons": [document.getElementById("python0"), document.getElementById("python1"), document.getElementById("python2"), document.getElementById("python3")]
                 });
-            model.movePythons = model.movePythonsMulti; 
+            model.movePythons = model.movePythonsMulti;
             controller = new Controller(model, view);
-            document.getElementById('game').style.visibility = "visible"; 
-            document.getElementById('opening').style.visibility = "hidden"; 
-            document.querySelector('body').setAttribute("class", "game"); 
+            document.getElementById('game').style.visibility = "visible";
+            document.getElementById('opening').style.visibility = "hidden";
+            document.querySelector('body').setAttribute("class", "game");
             view.moveGreg(model._greg.getPos);
             let pythonPosList = [];
             model._pythons.forEach(python => {

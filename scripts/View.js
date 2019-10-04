@@ -161,7 +161,7 @@ class View extends EventEmitter {
 		scoreText.innerText = 'Score: ' + score; 
 		scoreText.setAttribute('class', "badge badge-primary"); 	
 		let livesContainer = document.getElementById('lives');
-		livesContainer.appendChild(scoreContainer);
+		//livesContainer.appendChild(scoreContainer);
 		scoreContainer.appendChild(scoreText); 
 	}
 	updateScore(score){

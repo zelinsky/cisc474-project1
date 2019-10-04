@@ -1,12 +1,10 @@
-.game{
+body{
     background-color: black;
     background-image: url("../images/gregman-maze.png");
     background-repeat: no-repeat;
     background-position: center top;
 }
 .open{
-    background-color: black; 
-    color: #00ff00; 
     font-family: "Consolas"; 
 }
 .greg {
@@ -133,8 +131,15 @@
     -ms-transform: scale(-1, 1);
 }
 
-#status {
+.row {
+    margin-top: 10px;
+}
+
+.panel {
     position: absolute;
-    top: 10px;
-    left: 880px;
+    top: 400px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 300px;
+    padding: 0;
 }
