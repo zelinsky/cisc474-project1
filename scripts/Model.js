@@ -224,10 +224,11 @@ class Model extends EventEmitter {
             min = dist; 
           }
         } // get first adjacent node in list (could be random) 
-        if (index % 2 == 0){
+        if (index % 2 == 0 || python._dir == "stop"){
           adj = this._maze.NodeList[adjacent_nodes[Math.floor(Math.random()*adjacent_nodes.length)]];
         } 
-        if (Math.abs(python._posX - adj.x) < Math.abs(adj.y - python._posY)){
+      
+        if (Math.abs(python._posX - adj.x) <= Math.abs(adj.y - python._posY)){
            if (python._posY < adj.y){
              python._dir = "down"; 
            }
