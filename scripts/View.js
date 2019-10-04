@@ -85,18 +85,22 @@ class View extends EventEmitter {
 	// Press 'r' to play again
 	gameOver(winner) {
 		this.gamePause();
-		$("#status").addClass("hidden");
+		let w = '';
+		let m = '';
+		if (winner === "greg") {
+			w = "Greg Wins!";
+			m = "Python sucks!";
+		} else if (winner === "pythons") {
+			w = "Pythons Win!";
+			m = "Whitespace is the best!"
+		}
+		$("#info-panel-head").text(w);
+		$("#info-panel-body").html(`<p>${m}</p>`);
+		$("#info-panel").append('<div class="panel-footer text-center"><button id="restart" class="btn btn-primary">Restart</button></div>')
 		$("#restart").click(() => {
 			location.reload();
 		});
-		if (winner === "greg") {
-			console.log("Greg wins!");
-			$("#winnerEndScreen").removeClass("hidden");
-		} else if (winner === "pythons") {
-			console.log("Pythons winnnnn!");
-			$("#endScreen").removeClass("hidden");
-		}
-		$("#restart").removeClass("hidden");
+		document.getElementById('opening').style.visibility = 'visible';
 	}
 
 	// TODO:

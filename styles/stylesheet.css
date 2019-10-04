@@ -84,21 +84,6 @@ body{
     margin-top: 0;
 }
 
-#restart {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -40%);
-    -ms-transform: translate(-50%, -40%);
-    background-color: #555;
-    color: white;
-    font-size: 16px;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
 .endImage {
     left: 0;
     top: 0;
@@ -135,6 +120,10 @@ body{
     margin-top: 10px;
 }
 
+#opening {
+    z-index: 10;
+}
+
 .panel {
     position: absolute;
     top: 400px;
@@ -142,4 +131,5 @@ body{
     transform: translateX(-50%) translateY(-50%);
     width: 300px;
     padding: 0;
+    z-index: 10;
 }
