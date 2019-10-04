@@ -142,7 +142,7 @@ class View extends EventEmitter {
 	
 	removePython(pythonId) {
 		$(`#python${pythonId}`).hide();
-		$(`#python${pythonId}`).delay(3000).show(0);
+		$(`#python${pythonId}`).delay(2000).show(0);
 		pythonDeath.play();
 	} 
 
