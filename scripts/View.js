@@ -91,11 +91,11 @@ class View extends EventEmitter {
 		if (winner === "greg") {
 			w = "Greg Wins!";
 			m = "Statically typed languages rule!";
-			i = "../images/greg-old.png";
+			i = "/images/greg-old.png";
 		} else if (winner === "pythons") {
 			w = "Pythons Win!";
 			m = "Whitespace rules!";
-			i = "../images/python.png";
+			i = "/images/python.png";
 		}
 		$("#info-panel-head").text(w);
 		$("#info-panel-body").html(`<p>${m}</p><img src=${i}>`);
