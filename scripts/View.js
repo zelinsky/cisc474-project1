@@ -113,11 +113,14 @@ class View extends EventEmitter {
 	// Remove one life from display
 	loseLife() {
 		$(".relativeGreg").last().remove();
+		gregDeath.play();
 	}
 
 	changePower(up) {
 		if (up) {
 			$(".python").removeClass("python").addClass("scaredPython");
+			gregEatPowerUp.play();
+			setTimeout(() => gregPowerUp.play(), 750);
 		} else {
 			$(".scaredPython").removeClass("scaredPython").addClass("python");
 		}
@@ -135,11 +138,13 @@ class View extends EventEmitter {
 
 	removeSemicolon(semicolonId) {
 		$(`#sc${semicolonId}`).hide();
+		gregChomp.play();
 	}
 	
 	removePython(pythonId) {
 		$(`#python${pythonId}`).hide();
 		$(`#python${pythonId}`).delay(3000).show(0);
+		pythonDeath.play();
 	} 
 
 	moveGreg(pos) {
