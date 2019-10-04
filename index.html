@@ -35,15 +35,16 @@
             <!--<div id="debug_light"></div>-->
         </div>
         <div id="status" class="container-fluid hidden">
-                <div id="status-panel" class="panel panel-default col-md-6">
-                        <div id="status-panel-head" class="panel-heading text-center"><button class="btn btn-primary btn-lg" id="play">Play</button></div>
-                        <div class="panel-body">
-                                <span id="lives"></span>
-                        </div>
-                        <div id = "status-panel-foot" class="panel-footer text-center">  
-                        <span id="score"></span>
-                        </div>
-                    </div>
+            <div id="status-panel" class="panel panel-default col-md-6">
+                <div id="status-panel-head" class="panel-heading text-center"><button class="btn btn-primary btn-lg"
+                        id="play">Play</button></div>
+                <div class="panel-body">
+                    <span id="lives"></span>
+                </div>
+                <div id="status-panel-foot" class="panel-footer text-center">
+                    <span id="score"></span>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -68,7 +69,42 @@
 
 
     <script>
+
+        function sound(src) {
+            this.continue = false;
+            this.sound = document.createElement("audio");
+            this.sound.src = src;
+            this.sound.setAttribute("preload", "auto");
+            this.sound.setAttribute("controls", "none");
+            this.sound.style.display = "none";
+            document.body.appendChild(this.sound);
+            this.play = function () {
+                if (this.sound.paused) {
+                    this.sound.play();
+                } /*else {
+                    this.continue = true;
+                }*/
+            }
+            this.stop = function () {
+                this.sound.pause();
+            }
+            /*$(this.sound).on("ended", () => {
+                if (this.continue) {
+                    this.sound.play();
+                    this.continue = false;
+                }
+            }); */
+        }
+
+        var gameIntro = new sound("sounds/pacman_beginning.wav");
+        var gregChomp = new sound("sounds/pacman_chomp.wav");
+        var gregEatPowerUp = new sound("sounds/pacman_eatfruit.wav");
+        var gregPowerUp = new sound("sounds/pacman_intermission.wav");
+        var gregDeath = new sound("sounds/pacman_death.wav");
+        var pythonDeath = new sound("sounds/pacman_eatghost.wav");
+
         $(document).ready(() => {
+            gameIntro.play()
             document.getElementById('game').style.visibility = 'hidden';
             document.getElementById('opening').style.visibility = 'visible';
             document.querySelector("body").setAttribute("class", "open");

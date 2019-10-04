@@ -321,7 +321,7 @@ class Model extends EventEmitter {
         this._pythons.forEach(python => {
           python._speed = 10;
         });
-      }, 7000);
+      }, 6000);
     }
     this.emit("updateScore", this._score);
   }
