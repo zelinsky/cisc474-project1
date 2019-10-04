@@ -116,6 +116,12 @@ body{
     -ms-transform: scale(-1, 1);
 }
 
+#status {
+    left: 10px;
+    top: 10px;
+    position: absolute;
+}
+
 .row {
     margin-top: 10px;
 }
@@ -124,7 +130,7 @@ body{
     z-index: 10;
 }
 
-.panel {
+#info-panel {
     position: absolute;
     top: 400px;
     left: 50%;
@@ -134,7 +140,16 @@ body{
     z-index: 10;
 }
 
-.panel-heading {
+#info-panel-head {
     font-style: bold;
     font-size: 20px;
+}
+
+#status-panel {
+    width: 200px;
+    padding: 0;
+}
+
+#lives {
+    font-size: 50px;
 }

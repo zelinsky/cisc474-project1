@@ -34,16 +34,16 @@
             <div class="python" id="python3"></div>
             <!--<div id="debug_light"></div>-->
         </div>
-        <div id="status" class="container-fluid">
-            <div class="row">
-                <button class="btn btn-primary" id="play">Play</button>
-            </div>
-            <div class="row">
-                <span id="lives"></span>
-            </div>
-            <div class="row">
-                <span id="score"></span>
-            </div>
+        <div id="status" class="container-fluid hidden">
+                <div id="status-panel" class="panel panel-default col-md-6">
+                        <div id="status-panel-head" class="panel-heading text-center"><button class="btn btn-primary btn-lg" id="play">Play</button></div>
+                        <div class="panel-body">
+                                <span id="lives"></span>
+                        </div>
+                        <div id = "status-panel-foot" class="panel-footer text-center">  
+                        <span id="score"></span>
+                        </div>
+                    </div>
         </div>
 
     </div>
@@ -58,12 +58,11 @@
 
     <div id="opening" class="container">
         <div id="info-panel" class="panel panel-primary col-md-6">
-                <div id="info-panel-head" class="panel-heading text-center">Select Mode:</div>
-                <div id="info-panel-body" class="panel-body text-center">
-                        <button id="start" class="btn btn-primary">Play with AI</button>
-                        <button id="multi" class="btn btn-primary">Play with Friends</button>
-                </div>
-
+            <div id="info-panel-head" class="panel-heading text-center">Select Mode</div>
+            <div id="info-panel-body" class="panel-body text-center">
+                <button id="start" class="btn btn-primary">Play with AI</button>
+                <button id="multi" class="btn btn-primary">Play with Friends</button>
+            </div>
         </div>
     </div>
 
@@ -92,6 +91,7 @@
             });
             view.movePythons(pythonPosList);
             $("#play").click();
+            $("#status").removeClass("hidden");
         });
         document.getElementById("multi").addEventListener('click', function () {
             var model = new Model(),
@@ -111,6 +111,8 @@
             });
             view.movePythons(pythonPosList);
             $("#play").click();
+            $("#status").removeClass("hidden");
+
         }); 
     </script>
 </body>
