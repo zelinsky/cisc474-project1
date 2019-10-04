@@ -87,20 +87,26 @@ class View extends EventEmitter {
 		this.gamePause();
 		let w = '';
 		let m = '';
+		let i = '';
+		let s = this._model._score;
 		if (winner === "greg") {
 			w = "Greg Wins!";
-			m = "Python sucks!";
+			m = "Statically typed languages rule!";
+			i = "../images/greg-old.png";
 		} else if (winner === "pythons") {
 			w = "Pythons Win!";
-			m = "Whitespace is the best!"
+			m = "Whitespace rules!";
+			i = "../images/python.png";
 		}
 		$("#info-panel-head").text(w);
-		$("#info-panel-body").html(`<p>${m}</p>`);
-		$("#info-panel").append('<div class="panel-footer text-center"><button id="restart" class="btn btn-primary">Restart</button></div>')
+		$("#info-panel-body").html(`<p>${m}</p><img src=${i}>`);
+		$("#info-panel").append(`<div class="panel-footer text-center"><p>Greg's Score: ${s}</p><button id="restart" class="btn btn-primary">Restart</button></div>`)
 		$("#restart").click(() => {
 			location.reload();
 		});
+		$("#status").addClass("hidden");
 		document.getElementById('opening').style.visibility = 'visible';
+		
 	}
 
 	// TODO:

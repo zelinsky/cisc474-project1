@@ -16,9 +16,9 @@ body{
 }
 .relativeGreg {
     position: relative;
-    content:url("../images/greg.png");
+    content:url("../images/greg-old.png");
     width: 30px;
-    height: 30px;
+    height: 40px;
 
 }
 
@@ -132,4 +132,9 @@ body{
     width: 300px;
     padding: 0;
     z-index: 10;
+}
+
+.panel-heading {
+    font-style: bold;
+    font-size: 20px;
 }
