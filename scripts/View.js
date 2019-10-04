@@ -18,6 +18,9 @@ class View extends EventEmitter {
 		model.on("updateScore",  score =>this.updateScore(score));
 		model.on("changePower", up=>this.changePower(up));
 		$(document).keydown(evt => {
+			if (evt.which == 27 || evt.which == 80) { // p or esc
+				$("#play").click();
+			}
 			if (this._gameState == "start") {
 				switch (evt.which) {
 					case 37: // left
@@ -46,10 +49,6 @@ class View extends EventEmitter {
 					case 83: // s
 						this._gameValues.pythonDir = ["down", "down", "down", "down"];
 						break;
-					case 27: // esc
-							clearInterval(this._gameLoop);
-							this._gameState = "stop";
-						break;
 					default: return; // exit this handler for other keys
 				}
 			} /*else if (this._gameState == "stop") {
@@ -64,8 +63,8 @@ class View extends EventEmitter {
 		});
 
 		this._gameValues = {
-			gregDir: "up",
-			pythonDir: ["up", "up", "up", "up"]
+			gregDir: "stop",
+			pythonDir: ["stop", "stop", "stop", "stop"]
 		};
 		this.drawSemicolons(this._model._semicolons);
 	}
@@ -87,31 +86,40 @@ class View extends EventEmitter {
 		this.gamePause();
 		let w = '';
 		let m = '';
+		let i = '';
+		let s = this._model._score;
 		if (winner === "greg") {
 			w = "Greg Wins!";
-			m = "Python sucks!";
+			m = "Statically typed languages rule!";
+			i = "/images/greg-old.png";
 		} else if (winner === "pythons") {
 			w = "Pythons Win!";
-			m = "Whitespace is the best!"
+			m = "Whitespace rules!";
+			i = "/images/python.png";
 		}
 		$("#info-panel-head").text(w);
-		$("#info-panel-body").html(`<p>${m}</p>`);
-		$("#info-panel").append('<div class="panel-footer text-center"><button id="restart" class="btn btn-primary">Restart</button></div>')
+		$("#info-panel-body").html(`<p>${m}</p><img src=${i}>`);
+		$("#info-panel").append(`<div class="panel-footer text-center"><p>Greg's Score: ${s}</p><button id="restart" class="btn btn-primary">Restart</button></div>`)
 		$("#restart").click(() => {
 			location.reload();
 		});
+		$("#status").addClass("hidden");
 		document.getElementById('opening').style.visibility = 'visible';
+		
 	}
 
 	// TODO:
 	// Remove one life from display
 	loseLife() {
 		$(".relativeGreg").last().remove();
+		gregDeath.play();
 	}
 
 	changePower(up) {
 		if (up) {
 			$(".python").removeClass("python").addClass("scaredPython");
+			gregEatPowerUp.play();
+			setTimeout(() => gregPowerUp.play(), 750);
 		} else {
 			$(".scaredPython").removeClass("scaredPython").addClass("python");
 		}
@@ -129,11 +137,13 @@ class View extends EventEmitter {
 
 	removeSemicolon(semicolonId) {
 		$(`#sc${semicolonId}`).hide();
+		gregChomp.play();
 	}
 	
 	removePython(pythonId) {
 		$(`#python${pythonId}`).hide();
-		$(`#python${pythonId}`).delay(3000).show(0);
+		$(`#python${pythonId}`).delay(2000).show(0);
+		pythonDeath.play();
 	} 
 
 	moveGreg(pos) {
@@ -149,8 +159,10 @@ class View extends EventEmitter {
 	renderLives(numLives){
 		let livesContainer = document.getElementById('lives'); 
 		let livesText = document.createElement('span'); 
-		livesText.innerText = 'Lives'; 
-		livesText.setAttribute('class', 'badge badge-secondary'); 
+		livesText.innerText = 'Lives';
+		livesText.style.fontSize = "18px"; 
+		livesText.setAttribute('class', 'badge badge-info');
+		livesText.style.backgroundColor = "#337ab7";  
 		livesContainer.appendChild(livesText); 
 		for (let i = 0; i < numLives; i++) {
 			let span = document.createElement('span'); 
@@ -163,7 +175,9 @@ class View extends EventEmitter {
 		let scoreContainer = document.getElementById('score'); 
 		let scoreText = document.createElement('span'); 
 		scoreText.innerText = 'Score: ' + score; 
-		scoreText.setAttribute('class', "badge badge-primary"); 	
+		scoreText.style.fontSize = "18px";
+		scoreText.setAttribute('class', "badge badge-info");
+		scoreText.style.backgroundColor = "#337ab7"; 	
 		let livesContainer = document.getElementById('lives');
 		//livesContainer.appendChild(scoreContainer);
 		scoreContainer.appendChild(scoreText); 

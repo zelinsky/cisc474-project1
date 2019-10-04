@@ -89,7 +89,7 @@ class Model extends EventEmitter {
     this._semicolonsEaten = 0;
     for (let i = 0; i < 4; i++) {
       this._pythons.push(new Python(this._maze.NodeList[this._pythonStartPos[i]].x - this._maze.OFFSET,
-        this._maze.NodeList[this._pythonStartPos[i]].y - this._maze.OFFSET, this._speed));
+        this._maze.NodeList[this._pythonStartPos[i]].y - this._maze.OFFSET, this._speed-1));
     }
     
     this._semicolons = [];
@@ -225,7 +225,11 @@ class Model extends EventEmitter {
             min = dist; 
           }
         } // get first adjacent node in list (could be random) 
-        if (Math.abs(python._posX - adj.x) < Math.abs(adj.y - python._posY)){
+        if (index % 2 == 0 || python._dir == "stop"){
+          adj = this._maze.NodeList[adjacent_nodes[Math.floor(Math.random()*adjacent_nodes.length)]];
+        } 
+      
+        if (Math.abs(python._posX - adj.x) <= Math.abs(adj.y - python._posY)){
            if (python._posY < adj.y){
              python._dir = "down"; 
            }
@@ -241,6 +245,7 @@ class Model extends EventEmitter {
             python._dir = "left";
           }
         }
+        
       }
       
       shift = this.movePlayer(python, python._dir);
@@ -316,9 +321,9 @@ class Model extends EventEmitter {
         this._greg._poweredUp = false;
         this.emit("changePower", false);
         this._pythons.forEach(python => {
-          python._speed = 10;
+          python._speed = this._speed -1;
         });
-      }, 7000);
+      }, 6000);
     }
     this.emit("updateScore", this._score);
   }

@@ -16,9 +16,9 @@ body{
 }
 .relativeGreg {
     position: relative;
-    content:url("../images/greg.png");
+    content:url("../images/greg-old.png");
     width: 30px;
-    height: 30px;
+    height: 40px;
 
 }
 
@@ -116,6 +116,12 @@ body{
     -ms-transform: scale(-1, 1);
 }
 
+#status {
+    left: 10px;
+    top: 10px;
+    position: absolute;
+}
+
 .row {
     margin-top: 10px;
 }
@@ -124,7 +130,7 @@ body{
     z-index: 10;
 }
 
-.panel {
+#info-panel {
     position: absolute;
     top: 400px;
     left: 50%;
@@ -132,4 +138,18 @@ body{
     width: 300px;
     padding: 0;
     z-index: 10;
+}
+
+#info-panel-head {
+    font-style: bold;
+    font-size: 20px;
+}
+
+#status-panel {
+    width: 200px;
+    padding: 0;
+}
+
+#lives {
+    font-size: 50px;
 }
