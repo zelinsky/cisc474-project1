@@ -8,6 +8,7 @@ class Player {
     this._width = w;
     this._height = h;
     this._speed = s;
+    this._powerTimer = null;
   }
 
   get getPos() {
@@ -310,7 +311,8 @@ class Model extends EventEmitter {
       this._pythons.forEach(python => {
         python._speed = 5;
       });
-      setTimeout(() => {
+      clearTimeout(this._powerTimer);
+      this._powerTimer = setTimeout(() => {
         this._greg._poweredUp = false;
         this.emit("changePower", false);
         this._pythons.forEach(python => {
