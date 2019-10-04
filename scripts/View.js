@@ -63,8 +63,8 @@ class View extends EventEmitter {
 		});
 
 		this._gameValues = {
-			gregDir: "up",
-			pythonDir: ["up", "up", "up", "up"]
+			gregDir: "stop",
+			pythonDir: ["stop", "stop", "stop", "stop"]
 		};
 		this.drawSemicolons(this._model._semicolons);
 	}
