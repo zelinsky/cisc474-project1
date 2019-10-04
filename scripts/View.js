@@ -158,7 +158,7 @@ class View extends EventEmitter {
 		livesText.innerText = 'Lives';
 		livesText.style.fontSize = "18px"; 
 		livesText.setAttribute('class', 'badge badge-info');
-		livesText.style.backgroundColor = "#286090";  
+		livesText.style.backgroundColor = "#337ab7";  
 		livesContainer.appendChild(livesText); 
 		for (let i = 0; i < numLives; i++) {
 			let span = document.createElement('span'); 
@@ -173,7 +173,7 @@ class View extends EventEmitter {
 		scoreText.innerText = 'Score: ' + score; 
 		scoreText.style.fontSize = "18px";
 		scoreText.setAttribute('class', "badge badge-info");
-		scoreText.style.backgroundColor = "#286090"; 	
+		scoreText.style.backgroundColor = "#337ab7"; 	
 		let livesContainer = document.getElementById('lives');
 		//livesContainer.appendChild(scoreContainer);
 		scoreContainer.appendChild(scoreText); 
