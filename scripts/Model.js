@@ -316,7 +316,9 @@ class Model extends EventEmitter {
       this._pythons.forEach(python => {
         python._speed = 5;
       });
-      clearTimeout(this._powerTimer);
+      if (this._powerTimer) {
+        clearTimeout(this._powerTimer);
+      }
       this._powerTimer = setTimeout(() => {
         this._greg._poweredUp = false;
         this.emit("changePower", false);
